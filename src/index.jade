@@ -1,0 +1,31 @@
+doctype html
+html(lang="en-US")
+    head
+        title Single Page Application Template
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
+        meta(name="viewport", content="initial-scale=1")
+        link(rel="shortcut icon", href="assets/images/favicon.ico", type="image/x-icon")
+
+        //-inject:css
+        //-end-inject
+    body
+        .navbar.navbar-default
+            .container
+                .navbar-header
+                    button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
+                        span.sr-only Toggle navigation
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
+                    a.navbar-brand(href="#/") Single Page Application Template
+                .collapse.navbar-collapse
+                    ul.nav.navbar-nav
+                        li: a(href="#/") Home
+                        li: a(href="#/frameworks/all/") Frameworks
+
+        .container
+            div(data-role="view-container")
+
+        //-inject:js
+        //-end-inject

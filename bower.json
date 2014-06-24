@@ -1,0 +1,35 @@
+{
+  "name": "spa-template-ko",
+  "version": "0.0.0",
+  "authors": [
+    "cristian <t4013-github@yahoo.com>"
+  ],
+  "description": "This is a basic setup for a single page application using [jQuery](http://jquery.com/), [RequireJS](http://requirejs.org/), [Knockout](http://knockoutjs.com/) and [Crossroads.js](http://millermedeiros.github.io/crossroads.js/)",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "spa"
+  ],
+  "license": "MIT",
+  "homepage": "http://www.crissdev.com/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "~2.1.1",
+    "knockout": "~3.1.0",
+    "requirejs": "~2.1.14",
+    "crossroads": "~0.12.0",
+    "hasher": "~1.2.0",
+    "bootstrap": "~3.1.1",
+    "fontawesome": "~4.1.0",
+    "requirejs-text": "~2.0.12",
+    "q": "1.0.1"
+  }
+}

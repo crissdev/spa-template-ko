@@ -1,0 +1,35 @@
+{
+  "name": "spa-template-ko",
+  "version": "0.0.0",
+  "description": "This is a basic setup for a single page application using [jQuery](http://jquery.com/), [RequireJS](http://requirejs.org/), [Knockout](http://knockoutjs.com/) and [Crossroads.js](http://millermedeiros.github.io/crossroads.js/)",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "~3.8.1",
+    "gulp-changed": "~0.4.0",
+    "gulp-concat": "~2.2.0",
+    "gulp-footer": "~1.0.4",
+    "gulp-inject": "~0.4.1",
+    "gulp-jade": "~0.6.0",
+    "gulp-jshint": "~1.6.3",
+    "gulp-less": "~1.2.3",
+    "gulp-rename": "~1.2.0",
+    "gulp-util": "~2.2.17",
+    "jshint-stylish": "~0.2.0",
+    "streamqueue": "~0.1.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CrissDev/spa-template-ko.git"
+  },
+  "author": "cristian <t4013-github@yahoo.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CrissDev/spa-template-ko/issues"
+  }
+}

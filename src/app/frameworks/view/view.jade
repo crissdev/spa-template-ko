@@ -1,0 +1,166 @@
+.content-page-frameworks-view
+    h1
+        a(href="#/frameworks/all/" title="Back")
+            i.fa.fa-arrow-circle-left.back-button
+        | &nbsp;
+        span(data-bind="text: $data.title")
+    br
+    div(data-bind="if: $data.name() === 'Font Awesome'")
+        blockquote
+            small Font Awesome gives you scalable vector icons that can instantly be customized — size, color, drop shadow, and anything that can be done with the power of CSS.
+        br
+        p
+            //- Links
+            ul.list-inline
+                li.text-center
+                    a(href="http://fontawesome.io/" title="Font Awesome Website")
+                        i.fa.fa-globe.fa-2x
+                        br
+                        small Website
+                li.text-center
+                    a(href="https://github.com/FortAwesome/Font-Awesome" title="Github Repository")
+                        i.fa.fa-github.fa-2x
+                        br
+                        small Source Code
+                li.text-center
+                    a(href="https://twitter.com/fontawesome" title="Follow on Twitter")
+                        i.fa.fa-twitter.fa-2x
+                        br
+                        small Twitter
+
+    div(data-bind="if: $data.name() === 'Bootstrap'")
+        blockquote
+            small Bootstrap makes front-end web development faster and easier. It's made for folks of all skill levels, devices of all shapes, and projects of all sizes.
+        br
+        p
+            //- Links
+            ul.list-inline
+                li.text-center
+                    a(href="http://getbootstrap.com/" title="Bootstrap Website")
+                        i.fa.fa-globe.fa-2x
+                        br
+                        small Website
+                li.text-center
+                    a(href="https://github.com/twbs/bootstrap/" title="Github Repository")
+                        i.fa.fa-github.fa-2x
+                        br
+                        small Source Code
+                li.text-center
+                    a(href="https://twitter.com/twbootstrap" title="Follow on Twitter")
+                        i.fa.fa-twitter.fa-2x
+                        br
+                        small Twitter
+
+    div(data-bind="if: $data.name() === 'RequireJS'")
+        blockquote
+            small RequireJS is a JavaScript file and module loader. It is optimized for in-browser use, but it can be used in other JavaScript environments, like Rhino and Node. Using a modular script loader like RequireJS will improve the speed and quality of your code.
+        br
+        p
+            //- Links
+            ul.list-inline
+                li.text-center
+                    a(href="http://requirejs.org/" title="RequireJS Website")
+                        i.fa.fa-globe.fa-2x
+                        br
+                        small Website
+                li.text-center
+                    a(href="http://github.com/jrburke/requirejs" title="Github Repository")
+                        i.fa.fa-github.fa-2x
+                        br
+                        small Source Code
+                li.text-center
+                    a(href="http://twitter.com/jrburke" title="Follow on Twitter")
+                        i.fa.fa-twitter.fa-2x
+                        br
+                        small Twitter
+                li.text-center
+                    a(href="http://groups.google.com/group/requirejs" title="Google Groups")
+                        i.fa.fa-google.fa-2x
+                        br
+                        small Get Help
+
+    div(data-bind="if: $data.name() === 'jQuery'")
+        blockquote
+            small jQuery is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers. With a combination of versatility and extensibility, jQuery has changed the way that millions of people write JavaScript.
+        br
+        p
+            //- Links
+            ul.list-inline
+                li.text-center
+                    a(href="http://jquery.com/" title="jQuery Website")
+                        i.fa.fa-globe.fa-2x
+                        br
+                        small Website
+                li.text-center
+                    a(href="https://github.com/jquery" title="Github Repository")
+                        i.fa.fa-github.fa-2x
+                        br
+                        small Source Code
+                li.text-center
+                    a(href="http://twitter.com/jquery" title="Follow on Twitter")
+                        i.fa.fa-twitter.fa-2x
+                        br
+                        small Twitter
+
+    div(data-bind="if: $data.name() === 'Knockout'")
+        blockquote
+            small Knockout is a JavaScript library that helps you to create rich, responsive display and editor user interfaces with a clean underlying data model. Any time you have sections of UI that update dynamically (e.g., changing depending on the user’s actions or when an external data source changes), KO can help you implement it more simply and maintainably.
+        br
+        p
+            //- Links
+            ul.list-inline
+                li.text-center
+                    a(href="http://knockoutjs.com/" title="Knockout Website")
+                        i.fa.fa-globe.fa-2x
+                        br
+                        small Website
+                li.text-center
+                    a(href="https://github.com/knockout/knockout" title="Github Repository")
+                        i.fa.fa-github.fa-2x
+                        br
+                        small Source Code
+                li.text-center
+                    a(href="https://groups.google.com/forum/#!forum/knockoutjs" title="Google Groups")
+                        i.fa.fa-google.fa-2x
+                        br
+                        small Forum
+
+    div(data-bind="if: $data.name() === 'Crossroads'")
+        blockquote
+            p
+                small Crossroads.js is a routing library inspired by URL Route/Dispatch utilities present on frameworks like Rails, Pyramid, Django, CakePHP, CodeIgniter, etc... It parses a string input and decides which action should be executed by matching the string against multiple patterns.
+            p
+                small It is a powerful and flexible routing system. If used properly it can reduce code complexity by decoupling objects and also by abstracting navigation paths and server requests.
+        br
+        p
+            //- Links
+            ul.list-inline
+                li.text-center
+                    a(href="http://millermedeiros.github.io/crossroads.js/" title="Crossroads.js Website")
+                        i.fa.fa-globe.fa-2x
+                        br
+                        small Website
+                li.text-center
+                    a(href="http://github.com/millermedeiros/crossroads.js" title="Github Repository")
+                        i.fa.fa-github.fa-2x
+                        br
+                        small Source Code
+
+    div(data-bind="if: $data.name() === 'Q'")
+        blockquote
+            p
+                small A library for promises (CommonJS/Promises/A,B,D)
+        br
+        p
+            //- Links
+            ul.list-inline
+                li.text-center
+                    a(href="http://documentup.com/kriskowal/q/" title="Q Website")
+                        i.fa.fa-globe.fa-2x
+                        br
+                        small Website
+                li.text-center
+                    a(href="https://github.com/kriskowal/q" title="Github Repository")
+                        i.fa.fa-github.fa-2x
+                        br
+                        small Source Code
