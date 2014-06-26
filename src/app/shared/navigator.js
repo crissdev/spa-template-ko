@@ -124,10 +124,10 @@ define(function(require, exports) {
     function registerRoutes(routes) {
         for (var routePattern in routes) {
             if (routes.hasOwnProperty(routePattern)) {
-                var routeData = routes[routePattern];
-                var routeRegistration = {
-                    viewPage: routeData.viewPage
-                };
+                var routeData = routes[routePattern],
+                    routeRegistration = {
+                        viewPage: routeData.viewPage
+                    };
 
                 var crossroadsRoute = router.addRoute(routePattern, null, routeData.priority);
                 crossroadsRoute.rules = routeData.rules;
@@ -136,8 +136,6 @@ define(function(require, exports) {
                 //routeRegistration.__route__ = crossroadsRoute;
 
                 registeredRoutes[routePattern] = routeRegistration;
-
-                console.log('Route registered: ', routeRegistration);
             }
         }
     }

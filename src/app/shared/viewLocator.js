@@ -1,20 +1,16 @@
 define(function(require) {
     'use strict';
 
-    //
-    // The module that loads HTML and Javascript and performs data binding
-    //
+    var q = require('q'),
+        ko = require('knockout'),
+        jQuery = require('jquery'),
+        resourceLoader = require('app/shared/resourceLoader');
 
 
     //
     // Same options as for resourceLoader
     //
     function resolve(options, cancelPromise) {
-        var q = require('q'),
-            jQuery = require('jquery'),
-            ko = require('knockout'),
-            resourceLoader = require('app/shared/resourceLoader');
-
         // Clone the options object so we don't have strange/stupid bugs or unexpected behavior
         options = jQuery.extend({}, options);
 

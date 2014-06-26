@@ -1,15 +1,14 @@
 define(function(require) {
     'use strict';
 
+    var q = require('q');
+
 
     function qRequire() {
-        var q = require('q'),
-            deferred = q.defer(),
-            _slice = Array.prototype.slice,
-            dependencies = _slice.call(arguments);
-        require(dependencies,
+        var deferred = q.defer();
+        require(Array.prototype.slice.call(arguments),
             function() {
-                deferred.resolve(_slice.call(arguments));
+                deferred.resolve(Array.prototype.slice.call(arguments));
             },
             function(error) {
                 deferred.reject(error);

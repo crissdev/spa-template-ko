@@ -1,6 +1,9 @@
 define(function(require) {
     'use strict';
 
+    var helpers = require('app/shared/helpers'),
+        q = require('q');
+
 
     function _initModules() {
         var q = require('q'),
@@ -19,7 +22,6 @@ define(function(require) {
     }
 
     function _initViewManager() {
-        var helpers = require('app/shared/helpers');
         return helpers.qRequire('app/shared/viewManager')
             .spread(function(viewManager) {
                 var container = document.querySelector('[data-role="view-container"]');
@@ -28,7 +30,6 @@ define(function(require) {
     }
 
     function _initNavigator() {
-        var helpers = require('app/shared/helpers');
         return helpers.qRequire('app/shared/navigator')
             .spread(function(navigator) {
                 return navigator.run();
@@ -37,7 +38,6 @@ define(function(require) {
 
 
     function start() {
-        var q = require('q');
         // This might be useful for development
         // q.longStackSupport = true;
         return q.try(_initModules).then(_initViewManager).then(_initNavigator);

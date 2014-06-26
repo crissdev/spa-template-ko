@@ -1,9 +1,7 @@
 define(function(require) {
     'use strict';
 
-
-    var signals = require('signals'),
-        Signal = signals.Signal;
+    var Signal = require('signals').Signal;
 
 
     return {

@@ -1,9 +1,11 @@
 define(function(require) {
     'use strict';
 
+    var q = require('q'),
+        helpers = require('app/shared/helpers');
+
 
     function _registerRoutes() {
-        var helpers = require('app/shared/helpers');
         return helpers.qRequire('app/shared/navigator')
             .spread(function(navigator) {
                 var routes = {
@@ -23,7 +25,6 @@ define(function(require) {
     }
 
     function init() {
-        var q = require('q');
         return q.try(_registerRoutes);
     }
 
