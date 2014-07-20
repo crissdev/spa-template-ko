@@ -1,4 +1,4 @@
-node_modules
-vendor
-dev
-.idea
+node_modules/
+vendor/
+dev/
+.idea/
