@@ -9,39 +9,48 @@
         waitSeconds: 30,
 
         shim: {
-            // Bootstrap needs jQuery and we want it loaded (see below)
+            // Bootstrap needs jQuery
             bootstrap: ['jquery'],
 
-            // We want jQuery anf Bootstrap to load before Knockout
-            knockout: ['bootstrap']
+            // We want jQuery and Bootstrap to load before Knockout
+            knockout: ['jquery', 'bootstrap']
+        },
+
+        paths: {
+            // Shortcuts to easily reference common services
+            $: 'jquery',
+            $errorHandler: 'app/shared/errorHandler',
+            $events: 'app/shared/events',
+            $router: 'app/shared/router',
+            $app: 'app/application'
+        },
+
+        config: {
+            '$app': {
+                modules: [
+                    //-inject:modules
+
+                    //-end-inject
+                ]
+            }
         },
 
         //
         // The callback should be kept as simple as possible.
         //
         callback: function() {
-            var _reportApplicationStartupFailure = function(error) {
-                console.error(error);
-                //
-                // Default is to clear up the whole document and replace it with an error submission form.
-                // We consider that Bootstrap was loaded.
-                //
-                var reportErrorForm = '<div class="container"><div class="page-header"><h1 class="text-danger">Application could not start.</h1></div></div>';
-                document.body.innerHTML = reportErrorForm;
-            };
-
-            requirejs(['app/app'],
+            requirejs(['$app'],
                 function(app) {
-                    try {
-                        // Call done so that any error occurred during initialization will be caught and reported
-                        app.start().done();
-                    }
-                    catch (error) {
-                        _reportApplicationStartupFailure(error);
-                    }
+                    app.start().done();
                 },
                 function(error) {
-                    _reportApplicationStartupFailure(error);
+                    console.error(error);
+                    //
+                    // Default is to clear up the whole document and replace it with an error
+                    // submission form. We consider that Bootstrap was loaded.
+                    //
+                    document.body.innerHTML = '<div class="container"><div class="page-header">' +
+                        '<h1 class="text-danger">Application could not start.</h1></div></div>';
                 });
         }
     });

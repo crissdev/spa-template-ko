@@ -6,13 +6,20 @@ define(function(require) {
 
     function qRequire() {
         var deferred = q.defer();
-        require(Array.prototype.slice.call(arguments),
-            function() {
-                deferred.resolve(Array.prototype.slice.call(arguments));
-            },
-            function(error) {
-                deferred.reject(error);
-            });
+        try {
+            var _slice = Array.prototype.slice,
+                dependencies = Array.isArray(arguments[0]) ? arguments[0] : _slice.call(arguments);
+
+            require(dependencies, function() {
+                    deferred.resolve(_slice.call(arguments));
+                },
+                function(error) {
+                    deferred.reject(error);
+                });
+        }
+        catch (error) {
+            deferred.reject(error);
+        }
         return deferred.promise;
     }
 

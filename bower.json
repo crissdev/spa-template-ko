@@ -23,13 +23,14 @@
   ],
   "devDependencies": {
     "jquery": "~2.1.1",
-    "knockout": "~3.1.0",
+    "knockout": "~3.2.0",
     "requirejs": "~2.1.14",
     "crossroads": "~0.12.0",
     "hasher": "~1.2.0",
     "bootstrap": "~3.2.0",
     "fontawesome": "~4.1.0",
     "requirejs-text": "~2.0.12",
-    "q": "1.0.1"
+    "q": "1.0.1",
+    "i18next": "~1.7.3"
   }
 }

@@ -1,50 +1,22 @@
-define(function(require) {
+define(['app/shared/router'], function(router) {
     'use strict';
 
-    //
-    // This where this module gets initialized
-    //
-
-    function _registerCustomBindings() {
-        // This might be extracted in a separate file
-        var ko = require('knockout'),
-            bindingHandlers = ko.bindingHandlers;
-
-        bindingHandlers.authorLabel = {
-            update: function(element, valueAccessor) {
-                element.innerText = ko.unwrap(valueAccessor()) || 'No author';
-            }
-        };
-    }
-
     function _registerRoutes() {
-        var helpers = require('app/shared/helpers');
-        return helpers.qRequire('app/shared/navigator')
-            .spread(function(navigator) {
-                var routes = {
-                    '/frameworks/all/': {
-                        viewPage: 'app/frameworks/all'
-                    },
-                    '/frameworks/view/{name}/': {
-                        viewPage: 'app/frameworks/view',
-                        rules: {
-                            name: navigator.paramsValidation.libName,
-                            normalize_: function(req, vals) {
-                                return {
-                                    name: vals.name
-                                };
-                            }
-                        }
-                    }
-                };
-                navigator.registerRoutes(routes);
+        router.when('/frameworks/all/', {
+                templateUrl: 'text!app/frameworks/all/all.html',
+                viewModelUrl: 'app/frameworks/all/all'
+            })
+            .when('/frameworks/view/{name}/', {
+                templateUrl: 'text!app/frameworks/view/view.html',
+                viewModelUrl: 'app/frameworks/view/view',
+                rules: {
+                    name: /^[-._a-z0-9 ]{1,30}$/i
+                }
             });
     }
 
-
     function init() {
-        var q = require('q');
-        return q.try(_registerRoutes).then(_registerCustomBindings);
+        _registerRoutes();
     }
 
 

@@ -1,19 +1,10 @@
-define(function(require) {
+define(['knockout'], function(ko) {
     'use strict';
 
-    var ko = require('knockout');
-
-
-    function FrameworkDetailsViewPage() {
-        this.title = ko.observable('');
-        this.name = ko.observable('');
+    function FrameworkDetailsViewPage(routeParams) {
+        this.title = ko.observable(routeParams.name);
+        this.name = ko.observable(routeParams.name);
     }
-
-    FrameworkDetailsViewPage.prototype.$onLoad = function($element, routeParams) {
-        this.title(routeParams.name);
-        this.name(routeParams.name);
-    };
-
 
     return FrameworkDetailsViewPage;
 });

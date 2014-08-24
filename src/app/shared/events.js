@@ -1,20 +1,47 @@
-define(function(require) {
+/**
+ * Eventing Service
+ * @alias $events
+ */
+define(['signals'], function(signals) {
     'use strict';
 
-    var Signal = require('signals').Signal;
+    var Signal = signals.Signal,
+        serviceInstance = {},
+        _signals = {};
 
 
-    return {
-        navigation: {
-            /**
-             * Navigate to requested location.
-             */
-            navigate: new Signal(),
-
-            /**
-             * The requested location is not available (In such cases the event data should specify a redirect URL)
-             */
-            notFound: new Signal()
-        }
+    serviceInstance.on = function(eventName, handler, handlerContext) {
+        var signal = _signals[eventName] || (_signals[eventName] = new Signal());
+        signal.add(handler, handlerContext);
+        return serviceInstance;
     };
+
+    serviceInstance.once = function(eventName, handler, handlerContext) {
+        var signal = _signals[eventName] || (_signals[eventName] = new Signal());
+        signal.addOnce(handler, handlerContext);
+        return serviceInstance;
+    };
+
+    serviceInstance.off = function(eventName, handler, handlerContext) {
+        var signal = _signals[eventName];
+
+        if (signal) {
+            signal.remove(handler, handlerContext);
+        }
+        return serviceInstance;
+    };
+
+    serviceInstance.dispatch = function() {
+        var eventName = arguments[0],
+            eventArgs = Array.prototype.slice.call(arguments, 1),
+            signal = _signals[eventName];
+
+        if (signal) {
+            signal.dispatch.apply(signal, eventArgs);
+        }
+        return serviceInstance;
+    };
+
+
+    return serviceInstance;
 });
