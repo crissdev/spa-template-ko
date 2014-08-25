@@ -109,33 +109,19 @@ gulp.task('dev-transform-jade', function() {
 });
 
 gulp.task('dev-process-index', ['dev-process-less', 'dev-copy-app-js'], function() {
-    var jade = require('gulp-jade'),
-        inject = require('gulp-inject'),
-        path = require('path');
-
-    var injectDependencies = function(filePath) {
-        // Compute relative path
-        switch (path.extname(filePath)) {
-            case '.css':
-                return 'link(rel="stylesheet", type="text/css", href="' + path.relative(buildConfig.dev.basePath + '/', filePath) + '")';
-            case '.js':
-                return 'script(src="' + path.relative(buildConfig.dev.basePath, filePath) + '")';
-        }
-        return '';
-    };
+    var jade = require('gulp-jade');
 
     return gulp.src('src/index.jade')
-        .pipe(inject(gulp.src([buildConfig.dev.basePath + '/styles/main.css',
-                buildConfig.dev.basePath + '/require.js', buildConfig.dev.basePath + '/main.js']),
-                    { transform: injectDependencies,
-                        starttag: '//-inject:{{ext}}',
-                        endtag: '//-end-inject',
-                        addRootSlash: false }))
         .pipe(jade({
             ext:         '.html',
             pretty:      true,
             client:      false,
-            clientDebug: false
+            clientDebug: false,
+            data: {
+                PKG: require('./package.json'),
+                STYLES: ['styles/main.css'],
+                SCRIPTS: ['require.js', 'main.js']
+            }
         }))
         .pipe(gulp.dest(buildConfig.dev.basePath));
 });

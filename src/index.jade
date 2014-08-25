@@ -7,8 +7,9 @@ html(lang="en-US")
         meta(name="viewport", content="initial-scale=1")
         link(rel="shortcut icon", href="assets/images/favicon.ico", type="image/x-icon")
 
-        //-inject:css
-        //-end-inject
+        each file in STYLES
+            link(href="#{file}?v=#{PKG.version}", type="text/css", rel="stylesheet")
+
     body
         .navbar.navbar-default
             .container
@@ -25,7 +26,7 @@ html(lang="en-US")
                         li: a(href="#/frameworks/all/") Frameworks
 
         .container
-            div(data-bind="component: 'ui-view'")
+            ui-view
 
-        //-inject:js
-        //-end-inject
+        each file in SCRIPTS
+            script(src="#{file}?v=#{PKG.version}")
