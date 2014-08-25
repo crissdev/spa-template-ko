@@ -1,7 +1,7 @@
 define(['knockout', 'app/frameworks/libraries'], function(ko, libraries) {
     'use strict';
 
-    function FrameworkDetailsViewPage(routeParams) {
+    function FrameworkDetailsPage(routeParams) {
         var info = ko.utils.arrayFirst(libraries, function(item) {
             return item.name === routeParams.name;
         });
@@ -14,5 +14,5 @@ define(['knockout', 'app/frameworks/libraries'], function(ko, libraries) {
         }
     }
 
-    return FrameworkDetailsViewPage;
+    return FrameworkDetailsPage;
 });

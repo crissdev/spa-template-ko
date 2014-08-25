@@ -1,7 +1,7 @@
 define(['knockout', 'app/frameworks/libraries'], function(ko, libraries) {
     'use strict';
 
-    function AllFrameworksViewPage() {
+    function AllFrameworksPage() {
         this.title = ko.observable('Frameworks');
         this.libraries = libraries.map(function(item) {
             return {
@@ -11,5 +11,5 @@ define(['knockout', 'app/frameworks/libraries'], function(ko, libraries) {
         });
     }
 
-    return AllFrameworksViewPage;
+    return AllFrameworksPage;
 });
