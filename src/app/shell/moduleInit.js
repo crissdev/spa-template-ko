@@ -8,6 +8,9 @@ define(['app/shared/router'], function(router) {
             })
             .when('/404/', {
                 template: '<div><h1>Not Found</h1><br><h4 class="text-danger">The page you are looking for does not exist or has been moved.</h4></div>'
+            })
+            .otherwise({
+                redirectTo: '/'
             });
     }
 

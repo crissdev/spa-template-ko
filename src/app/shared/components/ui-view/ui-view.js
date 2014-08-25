@@ -1,12 +1,18 @@
-define(['knockout', 'crossroads', 'hasher'], function(ko, crossroads, hasher) {
+define(['app/shared/router', 'knockout', 'crossroads', 'hasher'], function(router, ko, crossroads, hasher) {
     'use strict';
 
     function ViewContainer() {
         this.component = ko.observable();
 
+        var redirectCount = 1,
+            maxRedirect = 10;
+
         crossroads.routed.add(function(location, data) {
             var $routeInfo = data.route.$definition,
                 routeParams = {};
+
+            // Clear current view
+            this.component(undefined);
 
             data.route._paramsIds.forEach(function(paramId, index) {
                 if (data.params[index] !== undefined) {
@@ -14,9 +20,22 @@ define(['knockout', 'crossroads', 'hasher'], function(ko, crossroads, hasher) {
                 }
             });
 
+            if ($routeInfo.redirectTo) {
+                redirectCount++;
+
+                if (redirectCount > maxRedirect) {
+                    redirectCount = 1;
+                    throw new Error('Maximum redirection count reached.');
+                }
+                hasher.replaceHash($routeInfo.redirectTo);
+                return;
+            }
+
             var componentInfo = {
                 name: $routeInfo.$component
             };
+
+            redirectCount = 1;
 
             if (!componentInfo.name) {
                 if ($routeInfo.template) {
@@ -51,8 +70,10 @@ define(['knockout', 'crossroads', 'hasher'], function(ko, crossroads, hasher) {
         }, this);
 
         crossroads.bypassed.add(function(location) {
-            console.warn('404: ' + location);
-            this.component(undefined);
+            if (router._missingRouteOptions) {
+                this.component(undefined);
+                hasher.replaceHash(router._missingRouteOptions.redirectTo);
+            }
         }, this);
 
         hasher.init();
