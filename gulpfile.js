@@ -26,7 +26,6 @@ gulp.task('dev-copy-vendor-js', function() {
     return streamqueue({ objectMode: true },
         gulp.src('vendor/requirejs/require.js'),
         gulp.src('vendor/jquery/dist/jquery.js'),
-        gulp.src('vendor/i18next/i18next.amd.withJQuery.js').pipe(rename('i18next.js')),
         gulp.src([
             'vendor/bootstrap/js/transition.js',
             'vendor/bootstrap/js/alert.js',
@@ -88,16 +87,10 @@ gulp.task('dev-copy-app-js', ['dev-copy-main-js'], function() {
 gulp.task('dev-process-less', function() {
     var inject = require('gulp-inject'),
         less = require('gulp-less'),
-        path = require('path');
+        concat = require('gulp-concat');
 
-    var injectDependencies = function(filePath) {
-        // Compute relative path
-        var fileName = path.relative('src/styles/', filePath);
-        return '@import "' + fileName + '";';
-    };
-
-    return gulp.src('src/styles/main.less')
-        .pipe(inject(gulp.src('src/app/**/*.less'), { transform: injectDependencies, starttag: '//inject:less', endtag: '//end-inject', addRootSlash: false }))
+    return gulp.src(['src/styles/main.less', 'src/app/**/*.less'])
+        .pipe(concat('main.less'))
         .pipe(less({ ieCompat: false }))
         .pipe(gulp.dest(buildConfig.dev.basePath + '/styles'));
 });

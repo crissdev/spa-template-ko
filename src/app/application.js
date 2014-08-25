@@ -4,30 +4,17 @@
 define(function(require, exports, module) {
     'use strict';
 
-    var i18next = require('i18next'),
-        q       = require('q'),
+    var q       = require('q'),
         ko      = require('knockout'),
         helpers = require('app/shared/helpers'),
         config  = module.config();
 
     function start() {
-        return _initLocalization()
-            .then(function() {
-                return _initModules();
-            })
+        return _initModules()
             .then(function() {
                 // This will make document level bindings to be applied and to start the router
                 ko.applyBindings({});
             });
-    }
-
-    function _initLocalization() {
-        return q(i18next.init({
-            debug: false,
-            escapeInterpolation: true,
-            useCookie: false,
-            useLocalStorage: true
-        }));
     }
 
     function _initModules() {

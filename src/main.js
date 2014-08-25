@@ -19,7 +19,6 @@
         paths: {
             // Shortcuts to easily reference common services
             $: 'jquery',
-            $errorHandler: 'app/shared/errorHandler',
             $events: 'app/shared/events',
             $router: 'app/shared/router',
             $app: 'app/application'
@@ -29,7 +28,6 @@
             '$app': {
                 modules: [
                     //-inject:modules
-
                     //-end-inject
                 ]
             }
