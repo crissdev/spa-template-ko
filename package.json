@@ -18,12 +18,12 @@
     "gulp-util": "~3.0.0",
     "jshint-stylish": "~0.4.0",
     "streamqueue": "~0.1.1",
+    "gulp-webserver": "~0.7.0",
     "karma": "~0.12.22",
     "karma-jasmine": "~0.1.5",
     "requirejs": "~2.1.14",
     "karma-requirejs": "~0.2.2",
-    "karma-phantomjs-launcher": "~0.1.4",
-    "gulp-karma": "0.0.4"
+    "karma-phantomjs-launcher": "~0.1.4"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

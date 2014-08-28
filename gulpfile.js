@@ -137,6 +137,15 @@ gulp.task('dev-build-watch', ['dev-build'], function() {
     gulp.watch('src/styles/*.less', ['dev-process-less']);
     gulp.watch('src/app/**/*.jade', ['dev-transform-jade']);
     gulp.watch('src/index.jade', ['dev-process-index']);
+
+    var webserver = require('gulp-webserver');
+    gulp.src('dev').pipe(webserver({
+        host: 'localhost',
+        port: 8000,
+        livereload: true,
+        directoryListing: false,
+        open: true
+    }));
 });
 
 //endregion

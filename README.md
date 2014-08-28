@@ -14,6 +14,11 @@ A demo is available by using python2.7 and the simple HTTP server script:
     python2.7 /usr/lib/python2.7/SimpleHTTPServer.py
 
 
+An integrated server is also available by running:
+
+    gulp dev-build-watch
+
+
 # Install
 
 Bower package will be available starting with 0.0.1 version.
