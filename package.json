@@ -1,11 +1,10 @@
 {
   "name": "spa-template-ko",
   "version": "0.0.0",
-  "description": "This is a basic setup for a single page application using [jQuery](http://jquery.com/), [RequireJS](http://requirejs.org/), [Knockout](http://knockoutjs.com/) and [Crossroads.js](http://millermedeiros.github.io/crossroads.js/)",
+  "description": "This is a basic setup for a single page application using Knockout, RequireJS, Crossroads.js, Bootstrap, jQuery and Q",
   "directories": {
     "test": "test"
   },
-  "dependencies": {},
   "devDependencies": {
     "gulp": "~3.8.7",
     "gulp-changed": "~1.0.0",
@@ -18,15 +17,35 @@
     "gulp-rename": "~1.2.0",
     "gulp-util": "~3.0.0",
     "jshint-stylish": "~0.4.0",
-    "streamqueue": "~0.1.1"
+    "streamqueue": "~0.1.1",
+    "karma": "~0.12.22",
+    "karma-jasmine": "~0.1.5",
+    "requirejs": "~2.1.14",
+    "karma-requirejs": "~0.2.2",
+    "karma-phantomjs-launcher": "~0.1.4",
+    "gulp-karma": "0.0.4"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "homepage": "https://github.com/CrissDev/spa-template-ko",
   "repository": {
     "type": "git",
     "url": "https://github.com/CrissDev/spa-template-ko.git"
   },
+  "keywords": [
+    "knockout",
+    "requirejs",
+    "crossroads",
+    "bootstrap",
+    "fontawesome",
+    "jquery",
+    "q",
+    "hasher",
+    "signals",
+    "spa",
+    "spa-ko"
+  ],
   "author": "cristian <t4013-github@yahoo.com>",
   "license": "MIT",
   "bugs": {

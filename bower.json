@@ -4,15 +4,25 @@
   "authors": [
     "cristian <t4013-github@yahoo.com>"
   ],
-  "description": "This is a basic setup for a single page application using [jQuery](http://jquery.com/), [RequireJS](http://requirejs.org/), [Knockout](http://knockoutjs.com/) and [Crossroads.js](http://millermedeiros.github.io/crossroads.js/)",
+  "description": "This is a basic setup for a single page application using Knockout, RequireJS, Crossroads.js, Bootstrap, jQuery and Q",
   "moduleType": [
     "amd"
   ],
   "keywords": [
-    "spa"
+    "knockout",
+    "requirejs",
+    "crossroads",
+    "bootstrap",
+    "fontawesome",
+    "jquery",
+    "q",
+    "hasher",
+    "signals",
+    "spa",
+    "spa-ko"
   ],
   "license": "MIT",
-  "homepage": "http://www.crissdev.com/",
+  "homepage": "https://github.com/CrissDev/spa-template-ko",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -28,7 +38,7 @@
     "crossroads": "~0.12.0",
     "hasher": "~1.2.0",
     "bootstrap": "~3.2.0",
-    "fontawesome": "~4.1.0",
+    "fontawesome": "~4.2.0",
     "requirejs-text": "~2.0.12",
     "q": "1.0.1"
   }
