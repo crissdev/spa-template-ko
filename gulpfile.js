@@ -64,7 +64,7 @@ gulp.task('dev-copy-main-js', function() {
     };
 
     return gulp.src('src/main.js')
-        .pipe(inject(gulp.src('src/app/**/moduleInit.js', { read: false }), {
+        .pipe(inject(gulp.src('src/app/**/module-init.js', { read: false }), {
             transform: injectDependencies,
             starttag: '//-inject:modules',
             endtag: '//-end-inject',

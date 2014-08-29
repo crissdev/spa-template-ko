@@ -2,10 +2,11 @@ define(['knockout', 'app/shared/router'], function(ko, router) {
     'use strict';
 
     function _registerRoutes() {
-        router.when('/frameworks/all/', {
-            templateUrl: 'text!app/frameworks/all/all.html',
-            viewModelUrl: 'app/frameworks/all/all'
-        })
+        router
+            .when('/frameworks/all/', {
+                templateUrl: 'text!app/frameworks/all/all.html',
+                viewModelUrl: 'app/frameworks/all/all'
+            })
             .when('/frameworks/view/{name}/', {
                 templateUrl: 'text!app/frameworks/view/view.html',
                 viewModelUrl: 'app/frameworks/view/view',
