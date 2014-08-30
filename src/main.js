@@ -21,11 +21,12 @@
             $: 'jquery',
             $events: 'app/shared/events',
             $router: 'app/shared/router',
+            $http: 'app/shared/http',
             $app: 'app/application'
         },
 
         config: {
-            '$app': {
+            $app: {
                 modules: [
                     //-inject:modules
                     //-end-inject
