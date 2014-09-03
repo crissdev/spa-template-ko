@@ -26,8 +26,6 @@ var gulp = require('gulp'),
     };
 
 
-//region Development Tasks
-
 gulp.task('copy-assets', function() {
     var changed = require('gulp-changed');
 
@@ -36,7 +34,7 @@ gulp.task('copy-assets', function() {
         .pipe(gulp.dest(buildConfig.dev.basePath + '/assets'));
 });
 
-gulp.task('copy-vendor-js', function() {
+gulp.task('process-vendor-js', function() {
     var concat = require('gulp-concat'),
         es = require('event-stream'),
         rename = require('gulp-rename');
@@ -67,7 +65,7 @@ gulp.task('copy-vendor-js', function() {
         .pipe(gulp.dest(buildConfig.dev.basePath));
 });
 
-gulp.task('copy-main-js', function() {
+gulp.task('process-main-js', function() {
     var jshint = require('gulp-jshint'),
         inject = require('gulp-inject'),
         stripDebug = require('gulp-strip-debug'),
@@ -94,7 +92,7 @@ gulp.task('copy-main-js', function() {
         .pipe(gulp.dest(buildConfig.dev.basePath));
 });
 
-gulp.task('copy-app-js', ['copy-main-js'], function() {
+gulp.task('process-app-js', function() {
     var jshint = require('gulp-jshint'),
         stripDebug = require('gulp-strip-debug'),
         iif = require('gulp-if'),
@@ -111,17 +109,35 @@ gulp.task('copy-app-js', ['copy-main-js'], function() {
 gulp.task('process-less', function() {
     var inject = require('gulp-inject'),
         less = require('gulp-less'),
+        iif = require('gulp-if'),
+        sourcemaps = require('gulp-sourcemaps'),
         concat = require('gulp-concat'),
         plumber = require('gulp-plumber');
 
     return gulp.src(['src/styles/main.less', 'src/app/**/*.less'])
         .pipe(plumber())
+        .pipe(iif(buildConfig.debug, sourcemaps.init()))
         .pipe(concat('main.less'))
         .pipe(less({ ieCompat: false }))
+        .pipe(iif(buildConfig.debug, sourcemaps.write()))
         .pipe(gulp.dest(buildConfig.dev.basePath + '/styles'));
 });
 
-gulp.task('transform-jade', function() {
+gulp.task('process-coffee', function() {
+    var coffee = require('gulp-coffee'),
+        iif = require('gulp-if'),
+        sourcemaps = require('gulp-sourcemaps'),
+        plumber = require('gulp-plumber');
+
+    return gulp.src('src/app/**/*.coffee')
+        .pipe(plumber())
+        .pipe(iif(buildConfig.debug, sourcemaps.init()))
+        .pipe(coffee())
+        .pipe(iif(buildConfig.debug, sourcemaps.write()))
+        .pipe(gulp.dest(buildConfig.dev.basePath + '/app'));
+});
+
+gulp.task('process-jade', function() {
     var jade = require('gulp-jade'),
         plumber = require('gulp-plumber');
 
@@ -136,7 +152,7 @@ gulp.task('transform-jade', function() {
         .pipe(gulp.dest(buildConfig.dev.basePath + '/app'));
 });
 
-gulp.task('process-index', ['process-less', 'copy-app-js'], function() {
+gulp.task('process-index', function() {
     var jade = require('gulp-jade'),
         plumber = require('gulp-plumber');
 
@@ -156,16 +172,16 @@ gulp.task('process-index', ['process-less', 'copy-app-js'], function() {
         .pipe(gulp.dest(buildConfig.dev.basePath));
 });
 
-gulp.task('build', ['copy-assets', 'copy-vendor-js', 'copy-app-js', 'transform-jade', 'process-index']);
+gulp.task('build', ['copy-assets', 'process-vendor-js', 'process-app-js', 'process-main-js', 'process-jade', 'process-less', 'process-coffee', 'process-index']);
 
 gulp.task('build-watch', ['build'], function() {
     gulp.watch('src/assets/**', ['copy-assets']);
-    gulp.watch('vendor/**/bower.json', ['copy-vendor-js']);
-    gulp.watch('src/app/**/*.js', ['copy-app-js']);
-    gulp.watch('src/main.js', ['copy-main-js']);
-    gulp.watch('src/app/**/*.less', ['process-less']);
-    gulp.watch('src/styles/*.less', ['process-less']);
-    gulp.watch('src/app/**/*.jade', ['transform-jade']);
+    gulp.watch('vendor/**/bower.json', ['process-vendor-js']);
+    gulp.watch('src/app/**/*.js', ['process-app-js']);
+    gulp.watch('src/main.js', ['process-main-js']);
+    gulp.watch('src/app/**/*.coffee', ['process-coffee']);
+    gulp.watch(['src/app/**/*.less', 'src/styles/*.less'], ['process-less']);
+    gulp.watch('src/app/**/*.jade', ['process-jade']);
     gulp.watch('src/index.jade', ['process-index']);
 
     if (argv.server) {
@@ -183,5 +199,3 @@ gulp.task('build-watch', ['build'], function() {
             }));
     }
 });
-
-//endregion

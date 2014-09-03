@@ -28,7 +28,9 @@
     "gulp-plumber": "~0.6.5",
     "gulp-if": "~1.2.4",
     "gulp-strip-debug": "~1.0.1",
-    "npm-check-updates": "~1.2.0"
+    "npm-check-updates": "~1.2.0",
+    "gulp-coffee": "~2.2.0",
+    "gulp-sourcemaps": "~1.1.4"
   },
   "scripts": {
     "test": "karma start --single-run",
