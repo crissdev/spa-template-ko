@@ -75,31 +75,54 @@ define(['jquery', 'q', 'module'], function(jQuery, q, module) {
     });
 
 
+    function _parseResponseHeaders(responseHeadersString) {
+        var rheaders = /^(.*?):[ \t]*([^\r\n]*)$/m,
+            responseHeaders = {},
+            match;
+
+        while ((match = rheaders.exec(responseHeadersString))) {
+            responseHeaders[match[1].toLowerCase()] = match[2];
+        }
+        return responseHeaders;
+    }
+
     http.sendRequest = function(requestConfig) {
         var deferred = q.defer();
 
         jQuery.ajax(requestConfig)
             .done(function(data, statusText, jqXHR) {
-                var config = {
+                var allHeaders = jqXHR.getAllResponseHeaders(),
+                    config = {
                         data: data,
                         status: jqXHR.status,
                         statusText: statusText,
                         headers: function(headerName) {
-                            //TODO: Not yet implemented
-                            return null;
+                            if (allHeaders && !jQuery.isPlainObject(allHeaders)) {
+                                allHeaders = _parseResponseHeaders(allHeaders);
+                            }
+                            if (headerName) {
+                                return allHeaders[headerName.toLowerCase()];
+                            }
+                            return allHeaders;
                         },
                         config: requestConfig
                     };
                 deferred.resolve(config);
             })
             .fail(function(jqXHR, statusText, error) {
-                var config = {
+                var allHeaders = jqXHR.getAllResponseHeaders(),
+                    config = {
                         data: null,
                         status: jqXHR.status,
                         statusText: statusText,
                         headers: function(headerName) {
-                            //TODO: Not yet implemented
-                            return null;
+                            if (allHeaders && !jQuery.isPlainObject(allHeaders)) {
+                                allHeaders = _parseResponseHeaders(allHeaders);
+                            }
+                            if (headerName) {
+                                return allHeaders[headerName.toLowerCase()];
+                            }
+                            return allHeaders;
                         }
                     };
                 deferred.reject(config);
