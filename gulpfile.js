@@ -75,7 +75,8 @@ gulp.task('process-main-js', function() {
 
     var injectDependencies = function(filePath) {
         var fileName = path.relative('src/', filePath);
-        return '\'' + fileName.substr(0, fileName.length - 3) + '\',';
+        fileName = '\'' + fileName.substr(0, fileName.length - 3) + '\',';
+        return fileName.replace(/\\/g, '/');
     };
 
     return gulp.src('src/main.js')
