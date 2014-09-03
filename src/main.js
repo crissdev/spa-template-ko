@@ -13,7 +13,10 @@
             bootstrap: ['jquery'],
 
             // We want jQuery and Bootstrap to load before Knockout
-            knockout: ['jquery', 'bootstrap']
+            knockout: ['jquery', 'bootstrap'],
+
+            // Useful to have jQuery/KnockoutJS plugins loaded automatically
+            $app: ['jquery', 'bootstrap', 'knockout']
         },
 
         paths: {
