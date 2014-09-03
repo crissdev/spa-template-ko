@@ -25,6 +25,7 @@
             $events: 'app/shared/events',
             $router: 'app/shared/router',
             $http: 'app/shared/http',
+            $helpers: 'app/shared/helpers',
             $app: 'app/application'
         },
 
