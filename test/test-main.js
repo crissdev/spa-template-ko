@@ -26,7 +26,10 @@
             bootstrap: ['jquery'],
 
             // We want jQuery and Bootstrap to load before Knockout
-            knockout: ['jquery', 'bootstrap']
+            knockout: ['jquery', 'bootstrap'],
+
+            // Useful to have jQuery/KnockoutJS plugins loaded automatically
+            $app: ['jquery', 'bootstrap', 'knockout']
         },
 
         paths: {
@@ -34,6 +37,8 @@
             $: 'jquery',
             $events: 'app/shared/events',
             $router: 'app/shared/router',
+            $http: 'app/shared/http',
+            $helpers: 'app/shared/helpers',
             $app: 'app/application'
         }
     });
