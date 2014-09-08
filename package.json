@@ -6,9 +6,10 @@
     "test": "test"
   },
   "devDependencies": {
-    "gulp": "~3.8.7",
+    "gulp": "~3.8.8",
     "gulp-changed": "~1.0.0",
-    "gulp-concat": "~2.3.5",
+    "gulp-concat": "~2.4.0",
+    "gulp-concat": "~2.4.0",
     "gulp-footer": "~1.0.5",
     "gulp-inject": "~1.0.2",
     "gulp-jade": "~0.7.0",
@@ -17,10 +18,10 @@
     "gulp-rename": "~1.2.0",
     "gulp-util": "~3.0.1",
     "jshint-stylish": "~0.4.0",
-    "gulp-webserver": "~0.7.2",
+    "gulp-webserver": "~0.8.0",
     "karma": "~0.12.23",
     "karma-jasmine": "~0.1.5",
-    "requirejs": "~2.1.14",
+    "requirejs": "~2.1.15",
     "karma-requirejs": "~0.2.2",
     "karma-phantomjs-launcher": "~0.1.4",
     "event-stream": "~3.1.7",
@@ -30,7 +31,8 @@
     "gulp-strip-debug": "~1.0.1",
     "npm-check-updates": "~1.2.0",
     "gulp-coffee": "~2.2.0",
-    "gulp-sourcemaps": "~1.1.4"
+    "gulp-sourcemaps": "~1.1.4",
+    "minimist": "~1.1.0"
   },
   "scripts": {
     "test": "karma start --single-run",

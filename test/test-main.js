@@ -22,9 +22,6 @@
         waitSeconds: 30,
 
         shim: {
-            // Bootstrap needs jQuery
-            bootstrap: ['jquery'],
-
             // We want jQuery and Bootstrap to load before Knockout
             knockout: ['jquery', 'bootstrap'],
 
