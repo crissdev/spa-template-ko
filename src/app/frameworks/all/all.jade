@@ -1,12 +1,12 @@
 .content-page-frameworks-all
-    h1(data-bind="text: $data.title")
+  h1(data-bind="text: $data.title")
 
-    .alert.alert-info
-        span Below is a list of the frameworks used to create this project
+  .alert.alert-info
+    span Below is a list of the frameworks used to create this project
 
-    ul.list-unstyled(data-bind="foreach: $data.libraries")
-        li
-            .hand.fade.text-info
-                i.fa.fa-hand-o-right
-                | &nbsp;
-            a(data-bind="attr: { href: '#/frameworks/view/' + $data.name }, text: $data.title")
+  ul.list-unstyled(data-bind="foreach: $data.libraries")
+    li
+      .hand.fade.text-info
+        i.fa.fa-hand-o-right
+        | &nbsp;
+      a(data-bind="attr: { href: '#/frameworks/view/' + $data.name }, text: $data.title")
