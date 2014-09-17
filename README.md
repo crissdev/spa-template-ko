@@ -9,14 +9,17 @@ This is a basic setup for a single page application using [Knockout](http://knoc
 
 A demo is available by using python2.7 and the simple HTTP server script:
 
-    gulp dev-build
+    gulp
     cd ./dev
-    python2.7 /usr/lib/python2.7/SimpleHTTPServer.py
+    python -m SimpleHTTPServer
 
 
 An integrated server is also available by running:
 
-    gulp dev-build-watch
+    gulp watch --app-server
+or
+
+    gulp watch --app-debug --app-server
 
 
 # Install
@@ -28,11 +31,11 @@ Bower package will be available starting with 0.0.1 version.
 
 The build system used is [Gulp](http://gulpjs.com/)
 
-    gulp dev-build
+    gulp
 
 or
 
-    gulp dev-build-watch
+    gulp watch
 
 
 The later will build the project and start watching for file changes.
