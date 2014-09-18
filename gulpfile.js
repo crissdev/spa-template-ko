@@ -3,23 +3,23 @@
 /**
  * Arguments that can be passed through command line:
  *
- *      --app-debug - Generate source maps, pretty jade templates etc.
+ *      --debug - Generate source maps, pretty jade templates etc.
  *              Default: false
- *              When --app-optimize=true, r.js will not compress any scripts or stylesheets
+ *              When --optimize=true, r.js will not compress any scripts or stylesheets
  *
- *      --app-optimize - Optimize output using r.js (this option is not yet supported)
+ *      --optimize - Optimize output using r.js (this option is not yet supported)
  *              Default: false
  *
- *      --app-server - create a server with livereload enabled (applies to build-watch task)
+ *      --server - create a server with livereload enabled (applies to build-watch task)
  *              Default: false
  *
  * Examples:
- *      gulp --app-debug
- *      gulp --app-optimize
- *      gulp --app-optimize --app-debug
+ *      gulp --debug
+ *      gulp --optimize
+ *      gulp --optimize --debug
  *
- *      gulp watch --app-debug
- *      gulp watch --app-debug --app-server
+ *      gulp watch --debug
+ *      gulp watch --debug --server
  *
  */
 
@@ -33,8 +33,9 @@ var gulp = require('gulp'),
         dist: {
             outputPath: './dist'
         },
-        optimize: !!argv['app-optimize'],
-        debug: !!argv['app-debug']
+        optimize: !!argv['optimize'],
+        debug: !!argv['debug'],
+        server: !!argv['server']
     };
 
 
@@ -65,11 +66,13 @@ gulp.task('process-vendor-js', function() {
         iif = require('gulp-if'),
         plumber = require('gulp-plumber');
 
-    var amdWrapTransform = es.map(function(file, cb) {
-        file.contents = new Buffer('define([\'jquery\'], function() {\n\n' +
-            file.contents.toString() + '\n});\n');
-        cb(null, file);
-    });
+    var amdWrapTransform = function() {
+        return es.map(function(file, cb) {
+            file.contents = new Buffer('define([\'jquery\'], function() {\n\n' +
+                file.contents.toString() + '\n});\n');
+            cb(null, file);
+        });
+    };
 
     var stream = es.merge(
         gulp.src('vendor/requirejs/require.js'),
@@ -87,7 +90,7 @@ gulp.task('process-vendor-js', function() {
             'vendor/bootstrap/js/scrollspy.js',
             'vendor/bootstrap/js/tab.js',
             'vendor/bootstrap/js/affix.js'
-        ]).pipe(concat('bootstrap.js')).pipe(amdWrapTransform),
+        ]).pipe(plumber(onTaskError)).pipe(concat('bootstrap.js')).pipe(amdWrapTransform()),
         iif(buildConfig.debug,
                 gulp.src('vendor/knockout/dist/knockout.debug.js')
                     .pipe(plumber(onTaskError))
@@ -176,13 +179,16 @@ gulp.task('process-coffee', function() {
 gulp.task('process-jade', function() {
     var jade = require('gulp-jade'),
         es = require('event-stream'),
-        iif = require('gulp-if'),
         plumber = require('gulp-plumber');
 
-    var trimLeftTransform = es.map(function(file, cb) {
-        file.contents = new Buffer(file.contents.toString('utf8').trimLeft());
-        cb(null, file);
-    });
+    var trimLeftTransform = function(trim) {
+        return es.map(function(file, cb) {
+            if (trim) {
+                file.contents = new Buffer(file.contents.toString('utf8').trimLeft());
+            }
+            cb(null, file);
+        });
+    };
 
     return es.merge(
         gulp.src('src/index.jade')
@@ -198,7 +204,7 @@ gulp.task('process-jade', function() {
                     SCRIPTS: ['require.js', 'main.js']
                 }
             }))
-            .pipe(iif(buildConfig.debug, trimLeftTransform))
+            .pipe(trimLeftTransform(buildConfig.debug))
             .pipe(gulp.dest(buildConfig.dev.outputPath)),
 
         gulp.src(['src/app/**/*.jade', '!src/app/**/_*.jade'])
@@ -209,7 +215,7 @@ gulp.task('process-jade', function() {
                 pretty: !!buildConfig.debug,
                 ext: '.html'
             }))
-            .pipe(iif(buildConfig.debug, trimLeftTransform))
+            .pipe(trimLeftTransform(buildConfig.debug))
             .pipe(gulp.dest(buildConfig.dev.outputPath + '/app'))
     );
 });
@@ -230,7 +236,7 @@ gulp.task('watch', ['build'], function() {
     gulp.watch(['src/app/**/*.less', 'src/styles/*.less'], ['process-less']);
     gulp.watch('src/app/**/*.jade', ['process-jade']);
 
-    if (argv['app-server']) {
+    if (buildConfig.server) {
         var webServer = require('gulp-webserver'),
             plumber = require('gulp-plumber');
 
