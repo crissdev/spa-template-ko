@@ -234,7 +234,7 @@ gulp.task('watch', ['build'], function() {
     gulp.watch(['src/app/**/*.js', 'src/main.js'], ['process-app-js']);
     gulp.watch('src/app/**/*.coffee', ['process-coffee']);
     gulp.watch(['src/app/**/*.less', 'src/styles/*.less'], ['process-less']);
-    gulp.watch('src/app/**/*.jade', ['process-jade']);
+    gulp.watch(['src/app/**/*.jade', 'src/index.jade'], ['process-jade']);
 
     if (buildConfig.server) {
         var webServer = require('gulp-webserver'),
