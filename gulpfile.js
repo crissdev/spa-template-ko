@@ -33,9 +33,9 @@ var gulp = require('gulp'),
         dist: {
             outputPath: './dist'
         },
-        optimize: !!argv['optimize'],
-        debug: !!argv['debug'],
-        server: !!argv['server']
+        optimize: !!argv.optimize,
+        debug: !!argv.debug,
+        server: !!argv.server
     };
 
 
