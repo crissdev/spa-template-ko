@@ -1,3 +1,12 @@
+/**
+ * Http module
+ * @alias $http
+ *
+ * Provides an AngularJS like API to handle HTTP requests (GET, POST, PUT, etc.).
+ * This means that request and response interceptors are available and can be used
+ * the same way as in AngularJS.
+ *
+ */
 define(['jquery', 'q', 'module'], function(jQuery, q, module) {
     'use strict';
 
@@ -62,7 +71,7 @@ define(['jquery', 'q', 'module'], function(jQuery, q, module) {
     }
 
 
-    ['get', 'header', 'delete'].forEach(function(method) {
+    ['get', 'head', 'delete'].forEach(function(method) {
         http[method] = function(url, requestConfig) {
             return http(jQuery.extend({}, requestConfig, { url: url, method: method }));
         };

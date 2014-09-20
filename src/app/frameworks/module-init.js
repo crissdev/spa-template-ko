@@ -1,3 +1,8 @@
+/**
+ * SAMPLE module
+ *
+ * Registers the routes for the DEMO. You are free to remove/change this module to fit your needs.
+ */
 define(['knockout', 'app/shared/router'], function(ko, router) {
     'use strict';
 

@@ -1,6 +1,8 @@
 /**
  * Eventing Service
  * @alias $events
+ *
+ * This module can be used as a way to communicate between components in the application.
  */
 define(['signals'], function(signals) {
     'use strict';

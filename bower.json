@@ -2,7 +2,7 @@
   "name": "spa-template-ko",
   "version": "0.0.0",
   "authors": [
-    "cristian <t4013-github@yahoo.com>"
+    "crissdev <t4013-github@yahoo.com> (http://crissdev.com)"
   ],
   "description": "This is a basic setup for a single page application using Knockout, RequireJS, Crossroads.js, Bootstrap, jQuery and Q",
   "moduleType": [

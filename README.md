@@ -58,4 +58,3 @@ The later will build the project and start watching for file changes.
 ## License
 
 MIT © [Cristian Trifan](http://crissdev.com)
-

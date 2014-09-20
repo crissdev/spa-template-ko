@@ -1,3 +1,8 @@
+/**
+ * SAMPLE module
+ *
+ * Registers the default route and a 404 route. You are free to remove/change this module to fit your needs.
+ */
 define(['app/shared/router'], function(router) {
     'use strict';
 

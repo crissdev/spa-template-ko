@@ -1,5 +1,9 @@
 /**
  * Router module
+ * @alias $router
+ *
+ * Provides a simple API to handle routes registration. It also watches for window hash changes
+ * and passes the hash to crossroads instance. Options can be set through module's configuration.
  */
 define(function(require, exports, module) {
     'use strict';
