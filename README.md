@@ -27,6 +27,13 @@ or
 gulp watch --debug --server
 ```
 
+## CoffeeScript
+
+A CoffeeScript implementation is available in the [coffee](https://github.com/CrissDev/spa-template-ko/tree/coffee) branch.
+It has the same code base and it will be maintained as the master branch evolves.
+
+CoffeeScript compilation is also supported in the master branch - see gulpfile.js.
+
 
 ## Install
 
