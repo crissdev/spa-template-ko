@@ -50,6 +50,7 @@ define(function(require, exports, module) {
                     return q.all(promises);
                 });
         }
+        return q.when();
     }
 
     return {
