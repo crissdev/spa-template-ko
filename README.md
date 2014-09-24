@@ -34,7 +34,9 @@ see [gulpfile.js](https://github.com/CrissDev/spa-template-ko/blob/master/gulpfi
 
 ## Install
 
+```sh
 bower install --save-dev spa-template-ko
+```
 
 
 ## Build
