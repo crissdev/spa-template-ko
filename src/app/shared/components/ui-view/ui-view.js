@@ -46,15 +46,7 @@ define(['app/shared/router', 'knockout', 'crossroads', 'hasher'], function(route
                 }
 
                 if ($routeInfo.viewModel) {
-                    switch (typeof $routeInfo.viewModel) {
-                        case 'function':
-                            componentInfo.viewModel = $routeInfo.viewModel;
-                            break;
-
-                        case 'string':
-                            componentInfo.viewModel = { require: $routeInfo.viewModelUrl };
-                            break;
-                    }
+                    componentInfo.viewModel = $routeInfo.viewModel;
                 }
                 else if ($routeInfo.viewModelUrl) {
                     componentInfo.viewModel = { require: $routeInfo.viewModelUrl };
