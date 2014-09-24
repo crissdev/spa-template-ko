@@ -29,14 +29,13 @@
             $app: ['jquery', 'bootstrap', 'knockout']
         },
 
-        paths: {
-            // Shortcuts to easily reference common services
-            $: 'jquery',
-            $events: 'app/shared/events',
-            $router: 'app/shared/router',
-            $http: 'app/shared/http',
-            $helpers: 'app/shared/helpers',
-            $app: 'app/application'
+        map: {
+            '*': {
+                '$events': 'app/shared/events',
+                '$router': 'app/shared/router',
+                '$http': 'app/shared/http',
+                '$helpers': 'app/shared/helpers'
+            }
         }
     });
 })(window);
