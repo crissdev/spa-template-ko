@@ -1,6 +1,6 @@
 {
   "name": "spa-template-ko",
-  "version": "0.0.0",
+  "version": "1.0.0-pre.1",
   "description": "This is a basic setup for a single page application using Knockout, RequireJS, Crossroads.js, Bootstrap, jQuery and Q",
   "directories": {
     "test": "test"
@@ -53,9 +53,11 @@
     "hasher",
     "signals",
     "spa",
-    "spa-ko"
+    "spa-ko",
+    "spa-template",
+    "spa-template-ko"
   ],
-  "author": "cristian <t4013-github@yahoo.com>",
+  "author": "crissdev <criss.trifan@gmail.com> (http://crissdev.com)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/CrissDev/spa-template-ko/issues"
