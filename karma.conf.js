@@ -23,7 +23,8 @@ module.exports = function(config) {
 
         // list of files to exclude
         exclude: [
-            'dev/main.js'
+            'dev/main.js',
+            'dev/app/application.js'
         ],
 
 
