@@ -24,7 +24,7 @@
     "spa-template-ko"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/CrissDev/spa-template-ko",
+  "homepage": "https://github.com/crissdev/spa-template-ko",
   "ignore": [
     "**/.*",
     "node_modules",

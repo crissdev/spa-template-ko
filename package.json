@@ -37,10 +37,10 @@
     "test": "karma start --single-run",
     "upgrade-packages": "./node_modules/npm-check-updates/bin/npm-check-updates -u"
   },
-  "homepage": "https://github.com/CrissDev/spa-template-ko",
+  "homepage": "https://github.com/crissdev/spa-template-ko",
   "repository": {
     "type": "git",
-    "url": "https://github.com/CrissDev/spa-template-ko.git"
+    "url": "https://github.com/crissdev/spa-template-ko.git"
   },
   "keywords": [
     "knockout",
@@ -60,7 +60,7 @@
   "author": "crissdev <criss.trifan@gmail.com> (http://crissdev.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/CrissDev/spa-template-ko/issues"
+    "url": "https://github.com/crissdev/spa-template-ko/issues"
   },
   "private": true
 }

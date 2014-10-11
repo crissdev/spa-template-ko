@@ -25,11 +25,11 @@ The later command will disable scripts and styles minification - usually useful 
 
 ## CoffeeScript
 
-A CoffeeScript implementation is available in the [coffee](https://github.com/CrissDev/spa-template-ko/tree/coffee) branch.
+A CoffeeScript implementation is available in the [coffee](https://github.com/crissdev/spa-template-ko/tree/coffee) branch.
 It has the same code base and it will be maintained as the master branch evolves.
 
 CoffeeScript compilation is also supported in the master branch -
-see [gulpfile.js](https://github.com/CrissDev/spa-template-ko/blob/master/gulpfile.js#L165).
+see [gulpfile.js](https://github.com/crissdev/spa-template-ko/blob/master/gulpfile.js#L165).
 
 
 ## Install
