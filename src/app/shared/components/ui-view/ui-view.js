@@ -1,4 +1,4 @@
-define(['app/shared/router', 'knockout', 'crossroads', 'hasher'], function(router, ko, crossroads, hasher) {
+define(['app/shared/router', 'knockout', 'crossroads', 'hasher', 'jquery'], function(router, ko, crossroads, hasher, jQuery) {
     'use strict';
 
     function ViewContainer() {
@@ -15,8 +15,16 @@ define(['app/shared/router', 'knockout', 'crossroads', 'hasher'], function(route
             this.component(undefined);
 
             data.route._paramsIds.forEach(function(paramId, index) {
-                if (data.params[index] !== undefined) {
-                    routeParams[paramId] = data.params[index];
+                var paramInfo = data.params[index];
+                if (paramInfo) {
+                    if (paramId.indexOf('?') === 0 && jQuery.isPlainObject(paramInfo)) {
+                        Object.keys(paramInfo).forEach(function(paramId) {
+                            routeParams[paramId] = paramInfo[paramId];
+                        });
+                    }
+                    else {
+                        routeParams[paramId] = data.params[index];
+                    }
                 }
             });
 
@@ -70,6 +78,8 @@ define(['app/shared/router', 'knockout', 'crossroads', 'hasher'], function(route
 
         hasher.init();
     }
+
+
 
     return {
         viewModel: ViewContainer,
