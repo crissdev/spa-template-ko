@@ -36,7 +36,7 @@ define(function(require, exports, module) {
 
     serviceInstance.otherwise = function(options) {
         if (!options.redirectTo) {
-            throw new Error('Missing route should redirect to a default route.');
+            throw new Error('Missing route should redirect to a default route');
         }
         return serviceInstance.when(null, options);
     };
