@@ -35,6 +35,9 @@
             }
         },
 
+        // This needs to be here for almond to work
+        deps: [],
+
         //
         // The callback should be kept as simple as possible.
         //

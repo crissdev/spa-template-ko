@@ -6,9 +6,7 @@ html(lang="en-US")
     meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
     meta(name="viewport", content="initial-scale=1")
     link(rel="shortcut icon", href="assets/favicon.ico", type="image/x-icon")
-
-    each file in STYLES
-      link(href="#{file}?v=#{PKG.version}", type="text/css", rel="stylesheet")
+    link(href="styles/main.css?v=#{APP_VERSION}", type="text/css", rel="stylesheet")
 
   body
     .navbar.navbar-default
@@ -28,5 +26,9 @@ html(lang="en-US")
     .container
       ui-view
 
-    each file in SCRIPTS
-      script(src="#{file}?v=#{PKG.version}")
+    if REQUIRE_VERSION
+      script(src="require.js?v=#{REQUIRE_VERSION}")
+    if ALMOND_VERSION
+      script(src="almond.js?v=#{ALMOND_VERSION}")
+
+    script(src="main.js?v=#{APP_VERSION}")

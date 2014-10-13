@@ -23,6 +23,7 @@ define(function(require) {
      * @param {...*|Array} params Dependencies to load
      */
     function qRequire(params) {
+        /*jshint unused:false*/
         var deferred = q.defer();
         try {
             var _slice = Array.prototype.slice,

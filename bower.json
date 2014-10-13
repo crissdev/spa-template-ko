@@ -33,7 +33,7 @@
     "test",
     "tests"
   ],
-  "devDependencies": {
+  "dependencies": {
     "jquery": "^2.1.1",
     "knockout": "^3.2.0",
     "requirejs": "^2.1.15",
@@ -42,6 +42,7 @@
     "bootstrap": "^3.2.0",
     "fontawesome": "^4.2.0",
     "requirejs-text": "^2.0.12",
-    "q": "^1.0.1"
+    "q": "^1.0.1",
+    "almond": "~0.3.0"
   }
 }

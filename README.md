@@ -8,28 +8,7 @@ This is a basic setup for a single page application using [Knockout](http://knoc
 
 ## Demo
 
-A demo is available by using the web server integrated in the build.
-
-```sh
-gulp watch --server
-```
-
-or
-
-```sh
-gulp watch --debug --server
-```
-
-The later command will disable scripts and styles minification - usually useful for debugging.
-
-
-## CoffeeScript
-
-A CoffeeScript implementation is available in the [coffee](https://github.com/crissdev/spa-template-ko/tree/coffee) branch.
-It has the same code base and it will be maintained as the master branch evolves.
-
-CoffeeScript compilation is also supported in the master branch -
-see [gulpfile.js](https://github.com/crissdev/spa-template-ko/blob/master/gulpfile.js#L165).
+A demo will be available [here](http://spa-ko.crissdev.com/)
 
 
 ## Install

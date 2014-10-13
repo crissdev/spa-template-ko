@@ -1,5 +1,12 @@
-define(['app/shared/router', 'knockout', 'crossroads', 'hasher', 'jquery'], function(router, ko, crossroads, hasher, jQuery) {
+define(function(require) {
     'use strict';
+
+    var router      = require('app/shared/router'),
+        ko          = require('knockout'),
+        crossroads  = require('crossroads'),
+        hasher      = require('hasher'),
+        jQuery      = require('jquery');
+
 
     function ViewContainer() {
         this.component = ko.observable();
@@ -69,7 +76,7 @@ define(['app/shared/router', 'knockout', 'crossroads', 'hasher', 'jquery'], func
             this.component({ name: componentInfo.name, params: routeParams });
         }, this);
 
-        crossroads.bypassed.add(function(location) {
+        crossroads.bypassed.add(function(/*location*/) {
             if (router._missingRouteOptions) {
                 this.component(undefined);
                 hasher.replaceHash(router._missingRouteOptions.redirectTo);
@@ -80,9 +87,9 @@ define(['app/shared/router', 'knockout', 'crossroads', 'hasher', 'jquery'], func
     }
 
 
-
     return {
         viewModel: ViewContainer,
-        template: '<div data-bind="if: $data.component"><div data-bind="component: $data.component"></div></div>'
+        template: '<div data-bind="if: $data.component">' +
+            '<div data-bind="component: $data.component"></div></div>'
     };
 });
