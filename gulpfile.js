@@ -35,13 +35,13 @@ var gulp = require('gulp'),
         coffeeLint: require('gulp-coffeelint')
     },
     buildConfig = {
-        // The location to use to output transformed output
+        // The location to use to write transformed output
         outputPath: './dev',
 
         // If source maps should be generated (coffee, less, js)
         sourceMaps: false,
 
-        // Asterisk means the build script should generate a version
+        // The version to use for build
         version: '0.0.' + String(Math.round(Math.random() * 1000000)),
 
         // Whether or not this is a release build
@@ -237,8 +237,6 @@ gulp.task('process-app-coffee', ['clean'], function() {
         .pipe(plugins.iif(buildConfig.sourceMaps, plugins.sourceMaps.init()))
         .pipe(plugins.coffee())
         .pipe(plugins.iif(buildConfig.sourceMaps, plugins.sourceMaps.write()))
-        //.pipe(plugins.jshint())
-        //.pipe(plugins.jshint.reporter('jshint-stylish'))
         .pipe(gulp.dest(buildConfig.outputPath));
 });
 
@@ -408,7 +406,6 @@ function optimize(done) {
             });
         });
         stream.on('error', function(err) {
-            // Remove temporary directories
             onTaskError(err);
         });
     }

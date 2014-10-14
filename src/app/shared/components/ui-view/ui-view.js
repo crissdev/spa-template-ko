@@ -86,10 +86,26 @@ define(function(require) {
         hasher.init();
     }
 
+    // Temporary custom binding until an API is created for this
+    ko.bindingHandlers.spakoAnimateView = {
+        update: function(element, valueAccessor) {
+            var state = ko.unwrap(valueAccessor());
+            var $element = jQuery(element);
+
+            $element.stop();
+
+            if (state) {
+                $element
+                    .css({opacity: 0, marginLeft: '15px'})
+                    .animate({opacity: 1, marginLeft: 0}, 500);
+            }
+        }
+    };
+
 
     return {
         viewModel: ViewContainer,
-        template: '<div data-bind="if: $data.component">' +
-            '<div data-bind="component: $data.component"></div></div>'
+        template: '<div data-bind="spakoAnimateView: $data.component"><div data-bind="if: $data.component">' +
+            '<div data-bind="component: $data.component"></div></div></div>'
     };
 });

@@ -43,6 +43,6 @@
     "fontawesome": "^4.2.0",
     "requirejs-text": "^2.0.12",
     "q": "^1.0.1",
-    "almond": "~0.3.0"
+    "almond": "^0.3.0"
   }
 }
