@@ -15,7 +15,7 @@ define(['$router'], function($router) {
         it('should not register default route unless redirectTo is provided', function() {
             var route = {viewModel: function() {}, template: '<div></div>'};
             expect(function() { $router.otherwise(route); }).toThrow(
-                new Error('Missing route should redirect to a default route.'));
+                new Error('Missing route should redirect to a default route'));
         });
     });
 });
