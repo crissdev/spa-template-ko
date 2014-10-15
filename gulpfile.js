@@ -61,7 +61,7 @@ var gulp = require('gulp'),
         .option('--source-maps', 'Generate source maps')
         .option('--release [version]', 'Create a release build [generate]')
         .option('--almond', 'If almond should be used instead of require.js')
-        .option('--server', 'Start a livereload server')
+        .option('--server [port]', 'Start a livereload server on the specified port [8000]')
 
         //- Gulp related CLI arguments
         .option('--tasks')
@@ -324,7 +324,7 @@ gulp.task('watch', ['build'], function() {
             .pipe(plumber(onTaskError))
             .pipe(webServer({
                 host: 'localhost',
-                port: 8000,
+                port: Number(arg.server) || 8000,
                 livereload: true,
                 directoryListing: false,
                 open: true
