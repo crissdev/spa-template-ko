@@ -306,6 +306,8 @@ gulp.task('build', ['process-vendor-scripts', 'process-app-scripts', 'process-st
 
 
 gulp.task('watch', ['build'], function() {
+    buildConfig.IS_WATCH = true;
+
     gulp.watch('vendor/**/bower.json', ['process-vendor-js']);
     gulp.watch('src/app/**/*.js', ['process-app-js']);
     gulp.watch('src/main.js', ['process-app-main']);
