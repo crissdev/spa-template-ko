@@ -317,14 +317,11 @@ gulp.task('watch', ['build'], function() {
     gulp.watch('src/index.jade', ['process-index-jade']);
 
     if (argv.server) {
-        var webServer = require('gulp-webserver'),
-            plumber = require('gulp-plumber');
-
         gulp.src(buildConfig.outputPath)
-            .pipe(plumber(onTaskError))
-            .pipe(webServer({
+            .pipe(plugins.plumber(onTaskError))
+            .pipe(plugins.webServer({
                 host: 'localhost',
-                port: Number(arg.server) || 8000,
+                port: parseInt(argv.server) || 8000,
                 livereload: true,
                 directoryListing: false,
                 open: true
