@@ -8,31 +8,39 @@ This is a basic setup for a single page application using [Knockout](http://knoc
 
 ## Demo
 
-A demo will be available [here](http://spa-ko.crissdev.com/)
+A demo is available [here](http://spa-ko.crissdev.com/)
 
 
 ## Install
 
+#### GIT
+
 ```sh
-bower install --save-dev spa-template-ko
+git clone git://github.com/crissdev/spa-template-ko.git -b master spa-ko
+```
+
+#### Bower
+
+```sh
+bower install spa-template-ko
+```
+
+Then, install bower and npm dependencies.
+
+```sh
+bower install
+npm install
 ```
 
 
 ## Build
 
-The build system used is [Gulp](http://gulpjs.com/)
+The build script supports a number of options that can be passed through command line. Run the
+following command in the application directory to see all the options available.
 
 ```sh
-gulp
+gulp --help
 ```
-
-or
-
-```sh
-gulp watch
-```
-
-The later will build the project and start watching for file changes.
 
 
 ## Test
