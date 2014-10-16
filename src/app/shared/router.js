@@ -11,7 +11,8 @@ define(function(require, exports, module) {
     var crossroads  = require('crossroads'),
         hasher      = require('hasher'),
         config      = module.config(),
-        serviceInstance = {};
+        serviceInstance = {},
+        _currentRoute, _currentLocation;
 
 
     function ensureTrailingSlash(location) {
@@ -30,8 +31,14 @@ define(function(require, exports, module) {
         return location;
     }
 
+    function onRouteChanged(location, data) {
+        _currentLocation = location;
+        _currentRoute = data.route._pattern;
+    }
+
     crossroads.greedyEnabled = !!config.greedyEnabled;
     crossroads.ignoreState = config.hasOwnProperty('ignoreState') ? !!config.ignoreState : true;
+    crossroads.routed.add(onRouteChanged);
 
     hasher.prependHash = config.prependHash || '';
     hasher.changed.add(function(newHash) { crossroads.parse(ensureTrailingSlash(newHash)); });
@@ -55,6 +62,16 @@ define(function(require, exports, module) {
         }
         return serviceInstance.when(null, options);
     };
+
+    Object.defineProperties(serviceInstance, {
+        currentRoute: {
+            get: function() { return _currentRoute; }
+        },
+        currentLocation: {
+            get: function() { return _currentLocation; }
+        }
+    });
+
 
     return serviceInstance;
 });
