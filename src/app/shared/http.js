@@ -119,6 +119,7 @@ define(['jquery', 'q', 'module'], function(jQuery, q, module) {
                 deferred.resolve(config);
             })
             .fail(function(jqXHR, statusText, error) {
+                /*jshint unused:false*/
                 console.error(error);
                 var allHeaders = jqXHR.getAllResponseHeaders(),
                     config = {
