@@ -14,13 +14,28 @@ define(function(require, exports, module) {
         serviceInstance = {};
 
 
+    function ensureTrailingSlash(location) {
+        var index = location.indexOf('?');
+        if (index > 0 && location[index - 1] !== '/') {
+            location = location.slice(0, index) + '/' + location.slice(index);
+        }
+        else if (index < 0 && location[location.length - 1] !== '/') {
+            location += '/';
+        }
+        var previouslyActive = hasher.changed.active;
+        hasher.changed.active = false;
+        hasher.replaceHash(location);
+        hasher.changed.active = previouslyActive;
+
+        return location;
+    }
+
     crossroads.greedyEnabled = !!config.greedyEnabled;
     crossroads.ignoreState = config.hasOwnProperty('ignoreState') ? !!config.ignoreState : true;
 
     hasher.prependHash = config.prependHash || '';
-    hasher.changed.add(function(newHash) { crossroads.parse(newHash); });
-    hasher.initialized.addOnce(function(newHash) { crossroads.parse(newHash); });
-
+    hasher.changed.add(function(newHash) { crossroads.parse(ensureTrailingSlash(newHash)); });
+    hasher.initialized.addOnce(function(newHash) { crossroads.parse(ensureTrailingSlash(newHash)); });
 
     serviceInstance.when = function(pattern, options) {
         if (pattern === null) {
