@@ -10,30 +10,35 @@ define(function(require, exports, module) {
 
     var crossroads  = require('crossroads'),
         hasher      = require('hasher'),
+        ko          = require('knockout'),
         config      = module.config(),
         serviceInstance = {},
-        _currentRoute, _currentLocation;
+        _currentRoute = ko.observable(),
+        _currentLocation = ko.observable();
 
 
     function ensureTrailingSlash(location) {
-        var index = location.indexOf('?');
-        if (index > 0 && location[index - 1] !== '/') {
-            location = location.slice(0, index) + '/' + location.slice(index);
-        }
-        else if (index < 0 && location[location.length - 1] !== '/') {
-            location += '/';
-        }
-        var previouslyActive = hasher.changed.active;
-        hasher.changed.active = false;
-        hasher.replaceHash(location);
-        hasher.changed.active = previouslyActive;
+        var index = location.indexOf('?'),
+            newLocation = location;
 
-        return location;
+        if (index > 0 && newLocation[index - 1] !== '/') {
+            newLocation = newLocation.slice(0, index) + '/' + newLocation.slice(index);
+        }
+        else if (index < 0 && newLocation[newLocation.length - 1] !== '/') {
+            newLocation += '/';
+        }
+        if (location !== newLocation) {
+            var previouslyActive = hasher.changed.active;
+            hasher.changed.active = false;
+            hasher.replaceHash(newLocation);
+            hasher.changed.active = previouslyActive;
+        }
+        return newLocation;
     }
 
     function onRouteChanged(location, data) {
-        _currentLocation = location;
-        _currentRoute = data.route._pattern;
+        _currentLocation(location);
+        _currentRoute(data.route._pattern);
     }
 
     crossroads.greedyEnabled = !!config.greedyEnabled;
@@ -41,8 +46,8 @@ define(function(require, exports, module) {
     crossroads.routed.add(onRouteChanged);
 
     hasher.prependHash = config.prependHash || '';
-    hasher.changed.add(function(newHash) { crossroads.parse(ensureTrailingSlash(newHash)); });
-    hasher.initialized.addOnce(function(newHash) { crossroads.parse(ensureTrailingSlash(newHash)); });
+    hasher.changed.add(function(newHash) { crossroads.parse(ensureTrailingSlash(newHash)); }, undefined, 100);
+    hasher.initialized.addOnce(function(newHash) { crossroads.parse(ensureTrailingSlash(newHash)); }, undefined, 100);
 
     serviceInstance.when = function(pattern, options) {
         if (pattern === null) {
@@ -63,14 +68,8 @@ define(function(require, exports, module) {
         return serviceInstance.when(null, options);
     };
 
-    Object.defineProperties(serviceInstance, {
-        currentRoute: {
-            get: function() { return _currentRoute; }
-        },
-        currentLocation: {
-            get: function() { return _currentLocation; }
-        }
-    });
+    serviceInstance.currentLocation = ko.pureComputed(function() { return _currentLocation(); });
+    serviceInstance.currentRoute = ko.pureComputed(function() { return _currentRoute(); });
 
 
     return serviceInstance;
