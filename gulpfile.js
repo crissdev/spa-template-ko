@@ -199,11 +199,11 @@ gulp.task('process-app-js', ['clean'], function() {
     gulp.src('src/app/**/*.js', {base: 'src'})
         .pipe(plugins.plumber(onTaskError))
         .pipe(plugins.changed('app', {cwd: buildConfig.outputPath}))
+        .pipe(plugins.jshint())
+        .pipe(plugins.jshint.reporter('jshint-stylish'))
         .pipe(plugins.iif(buildConfig.sourceMaps, plugins.sourceMaps.init()))
         .pipe(plugins.iif(buildConfig.release, plugins.stripDebug()))
         .pipe(plugins.iif(buildConfig.sourceMaps, plugins.sourceMaps.write()))
-        .pipe(plugins.jshint())
-        .pipe(plugins.jshint.reporter('jshint-stylish'))
         .pipe(gulp.dest(buildConfig.outputPath));
 });
 
@@ -231,9 +231,9 @@ gulp.task('process-app-main', ['clean'], function() {
 gulp.task('process-app-coffee', ['clean'], function() {
     return gulp.src('src/app/**/*.coffee', {base: 'src'})
         .pipe(plugins.plumber(onTaskError))
+        .pipe(plugins.changed('app', {cwd: buildConfig.outputPath, ext: '.js'}))
         .pipe(plugins.coffeeLint())
         .pipe(plugins.coffeeLint.reporter('default'))
-        .pipe(plugins.changed('app', {cwd: buildConfig.outputPath, ext: '.js'}))
         .pipe(plugins.iif(buildConfig.sourceMaps, plugins.sourceMaps.init()))
         .pipe(plugins.coffee())
         .pipe(plugins.iif(buildConfig.sourceMaps, plugins.sourceMaps.write()))
@@ -264,12 +264,7 @@ gulp.task('process-app-jade', ['clean'], function() {
     return gulp.src('src/app/**/*.jade', {base: 'src'})
         .pipe(plugins.plumber(onTaskError))
         .pipe(plugins.changed('app', {cwd: buildConfig.outputPath, ext: '.html'}))
-        .pipe(plugins.jade({
-            clientDebug: false,
-            client: false,
-            pretty: false,
-            ext: '.html'
-        }))
+        .pipe(plugins.jade({clientDebug: false, client: false, pretty: false, ext: '.html'}))
         .pipe(gulp.dest(buildConfig.outputPath));
 });
 
@@ -310,8 +305,9 @@ gulp.task('watch', ['build'], function() {
 
     gulp.watch('vendor/**/bower.json', ['process-vendor-js']);
     gulp.watch('src/app/**/*.js', ['process-app-js']);
-    gulp.watch('src/main.js', ['process-app-main']);
     gulp.watch('src/app/**/*.coffee', ['process-app-coffee']);
+    gulp.watch('src/app/**/module-init.{js,coffee}', ['process-app-main']);
+    gulp.watch('src/main.js', ['process-app-main']);
 
     gulp.watch('src/assets/**', ['process-assets']);
     gulp.watch(['src/styles/*.less', 'src/app/**/*.less'], ['process-less']);
