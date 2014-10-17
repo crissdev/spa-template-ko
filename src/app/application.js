@@ -53,7 +53,20 @@ define(function(require, exports, module) {
         return q.when();
     }
 
-    return {
-        start: start
-    };
+
+    //
+    // Start the application
+    //
+    try {
+        start().done();
+    }
+    catch (e) {
+        console.error(e);
+        // Default is to clear up the whole document and replace it with an error message
+        document.body.innerHTML = '<div class="container"><div class="page-header">' +
+        '<h1 class="text-danger">Application could not start :-(</h1></div>' +
+        '<div style="margin-top"><code>' + e.stack.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/\n/g, '<br>&nbsp;&nbsp;') + '</code></div>' + '</div>';
+        throw e;
+    }
 });
