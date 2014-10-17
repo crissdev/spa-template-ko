@@ -1,0 +1,13 @@
+div
+  blockquote(data-bind="foreach: $data.description")
+    p
+      small(data-bind="text: $data")
+  br
+  p
+    //- Links
+    ul.list-inline(data-bind="foreach: $data.links")
+      li.text-center
+        a(data-bind="attr: {title: $data.title, href: $data.href}")
+          i.fa.fa-2x(data-bind="css: $data.iconClass")
+          br
+          small(data-bind="text: $data.linkText")

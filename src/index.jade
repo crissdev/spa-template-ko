@@ -9,7 +9,7 @@ html(lang="en-US")
     link(href="styles/main.css?v=#{APP_VERSION}", type="text/css", rel="stylesheet")
 
   body
-    .navbar.navbar-default
+    .navbar.navbar-default.navbar-inverse
       .container
         .navbar-header
           button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
@@ -17,9 +17,9 @@ html(lang="en-US")
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand(href="#/") Single Page Application Template
+          a.navbar-brand(href="#/") spa-ko
         .collapse.navbar-collapse
-          ul.nav.navbar-nav
+          main-nav
 
     .container
       ui-view

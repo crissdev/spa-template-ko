@@ -1,0 +1,9 @@
+ul.nav.navbar-nav
+  li(data-bind="css: {active: $data.currentLocation() === '/'}")
+    a(href="#/") Home
+  li(data-bind="css: {active: $data.currentLocation() === '/libs/all/'}")
+    a(href="#/libs/all/") Libraries
+ul.nav.navbar-nav.pull-right
+  li
+    a(href="https://github.com/crissdev/spa-template-ko/", title="GitHub Project", style="padding-top: 10.5px; padding-bottom: 10.5px")
+      i.fa.fa-3x.fa-github
