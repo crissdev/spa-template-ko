@@ -358,46 +358,37 @@ function optimize(done) {
             callback(null, file);
         }));
         stream.on('end', function() {
-            var configPath = nodejs.path.join(buildConfig.outputPath, 'require-config.js');
+            var rjs = require('requirejs'),
+                configPath = nodejs.path.join(buildConfig.outputPath, 'require-config.js'),
+                previousWorkingDirectory = process.cwd();
+
             nodejs.fs.writeFileSync(configPath, '(' + JSON.stringify(rjsConfig) + ')');
+            process.chdir(buildConfig.outputPath);
 
-            var process = nodejs.childProcess.spawn('./node_modules/.bin/r.js', ['-o', configPath], {stdio: 'inherit'});
+            rjs.optimize(rjsConfig, function() {
+                var buildFiles = [
+                    'index.html',
+                    buildConfig.useAlmond ? 'almond.js' : 'require.js',
+                    'main.js',
+                    'styles/**',
+                    'assets/**',
+                    'build.txt'
+                ];
+                process.chdir(previousWorkingDirectory);
+                var deployStream = gulp.src(buildFiles, {cwd: rjsConfig.dir, base: rjsConfig.dir})
+                    .pipe(plugins.plumber(onTaskError))
+                    .pipe(gulp.dest(buildConfig.releaseOutput));
 
-            process.on('close', function(exitCode) {
-                if (exitCode !== 0) {
+                deployStream.on('end', function() {
                     notifier.notify({
                         title: 'SPA-KO',
-                        message: 'The build failed. Exit code: ' + exitCode,
+                        message: 'The build is complete',
                         sound: true,
                         wait: false,
-                        time: 10000
+                        time: 5000
                     });
                     done();
-                }
-                else {
-                    var buildFiles = [
-                        'index.html',
-                        buildConfig.useAlmond ? 'almond.js' : 'require.js',
-                        'main.js',
-                        'styles/**',
-                        'assets/**',
-                        'build.txt'
-                    ];
-                    var deployStream = gulp.src(buildFiles, {cwd: rjsConfig.dir, base: rjsConfig.dir})
-                        .pipe(plugins.plumber(onTaskError))
-                        .pipe(gulp.dest(buildConfig.releaseOutput));
-
-                    deployStream.on('end', function() {
-                        notifier.notify({
-                            title: 'SPA-KO',
-                            message: 'The build is complete',
-                            sound: true,
-                            wait: false,
-                            time: 10000
-                        });
-                        done();
-                    });
-                }
+                });
             });
         });
         stream.on('error', function(err) {
