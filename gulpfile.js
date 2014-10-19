@@ -177,7 +177,7 @@ gulp.task('process-vendor-scripts', ['clean'], function() {
             .pipe(plugins.concat('bootstrap.js'))
             .pipe(amdWrapTransform({jquery: 'jQuery'}))
             .pipe(plugins.changed(buildConfig.outputPath, {hasChanged: plugins.changed.compareSha1Digest})),
-        gulp.src(buildConfig.release ? 'knockout.debug.js' : 'knockout.js', {cwd: 'vendor/knockout/dist'})
+        gulp.src(buildConfig.release ? 'knockout.js' : 'knockout.debug.js', {cwd: 'vendor/knockout/dist'})
             .pipe(plugins.plumber(onTaskError))
             .pipe(plugins.rename('knockout.js'))
             .pipe(plugins.changed(buildConfig.outputPath, {hasChanged: plugins.changed.compareSha1Digest})),
