@@ -27,6 +27,8 @@
     "iit": false,
     "expect": false,
     "define": false,
-    "spyOn": false
+    "spyOn": false,
+    "beforeEach": false,
+    "afterEach": false
   }
 }
