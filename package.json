@@ -1,6 +1,6 @@
 {
   "name": "spa-template-ko",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "This is a basic setup for a single page application using Knockout, RequireJS, Crossroads.js, Bootstrap, jQuery and Q",
   "directories": {
     "test": "test"
