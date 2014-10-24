@@ -8,7 +8,6 @@ var gulp = require('gulp'),
     notifier = require('node-notifier'),
     tildify = require('tildify'),
     commander = require('commander'),
-    extend = require('extend'),
     del = require('del'),
     temp = require('temp').track(),
     nodejs = {
@@ -97,7 +96,7 @@ if (argv.sourceMaps) {
 
 function onTaskError(error) {
     // When doing an optimized build, any task error is considered fatal
-    gutil.log(gutil.colors.red(error.stack));
+    gutil.log(gutil.colors.red(error));
 
     if (buildConfig.release) {
         process.exit(1);
@@ -122,7 +121,7 @@ gulp.task('clean', function(done) {
         gutil.log('Cleaning output directory ' + gutil.colors.magenta(tildify(nodejs.path.resolve(buildConfig.outputPath))));
         del('*', {cwd: buildConfig.outputPath}, function(err) {
             if (err) {
-                gutil.log(gutil.colors.red(err.stack));
+                gutil.log(gutil.colors.red(err));
             }
             done();
         });
@@ -332,7 +331,7 @@ gulp.task('default', ['build']);
 
 function optimize(done) {
     try {
-        var rjsConfig = extend({}, require('./require-config'));
+        var rjsConfig = require('./require-config');
         rjsConfig.appDir = buildConfig.outputPath;
         rjsConfig.dir = mkTmpDir();
 
