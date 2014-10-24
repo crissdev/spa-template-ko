@@ -8,14 +8,6 @@
         // How long we allow the dependencies to load (in seconds)
         waitSeconds: 30,
 
-        shim: {
-            // We want jQuery and Bootstrap to load before Knockout
-            knockout: ['jquery', 'bootstrap'],
-
-            // Useful to have jQuery/KnockoutJS plugins loaded automatically
-            $app: ['jquery', 'bootstrap', 'knockout']
-        },
-
         map: {
             '*': {
                 '$events': 'app/shared/events',

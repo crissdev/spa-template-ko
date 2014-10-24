@@ -12,9 +12,20 @@ define(function(require, exports, module) {
     'use strict';
 
     var q       = require('q'),
-        ko      = require('knockout'),
         helpers = require('app/shared/helpers'),
         config  = module.config();
+
+
+    /**
+     * Ensure core dependencies are loaded first
+     * For instance, knockout will not use jQuery if it's loaded first.
+     * @private
+     */
+    function _loadCoreDependencies() {
+        // bootstrap will load jQuery because bootstrap module is an AMD module (see gulpfile.js)
+        // Other dependencies that may go here as well: knockout-validation etc.
+        return helpers.qRequire('bootstrap');
+    }
 
 
     /**
@@ -23,10 +34,16 @@ define(function(require, exports, module) {
      * @returns {Promise} A q promise that will have no value on success, but an error on failure.
      */
     function start() {
-        return _initModules()
+        return _loadCoreDependencies()
             .then(function() {
-                // This will make document level bindings to be applied and to start the router
-                ko.applyBindings({});
+                return _initModules();
+            })
+            .then(function() {
+                return helpers.qRequire('knockout')
+                    .spread(function(ko) {
+                        // This will make document level bindings to be applied and to start the router
+                        ko.applyBindings({});
+                    });
             });
     }
 
