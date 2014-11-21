@@ -104,7 +104,7 @@ function onTaskError(error) {
 }
 
 function notify(message) {
-    notifier.notify({title: 'SPA-KO', message: message, sound: true, wait: false, time: 10000});
+    notifier.notify({title: 'SPA-KO', message: message, sound: true, wait: false, time: 5000});
 }
 
 function mkTmpDir() {
@@ -379,13 +379,7 @@ function optimize(done) {
                     .pipe(gulp.dest(buildConfig.releaseOutput));
 
                 deployStream.on('end', function() {
-                    notifier.notify({
-                        title: 'SPA-KO',
-                        message: 'The build is complete',
-                        sound: true,
-                        wait: false,
-                        time: 5000
-                    });
+                    notifier.notify('The build is complete');
                     done();
                 });
             });
