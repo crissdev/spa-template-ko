@@ -51,7 +51,9 @@ var gulp        = require('gulp'),
         useAlmond: false,
 
         // If the current build was started with the watch task
-        IS_WATCH: false
+        IS_WATCH: false,
+
+        bowerComponentsLocation: 'bower_components'
     },
     argv = commander
         .option('--output [path]', 'The location to use to output build files [./dev | ./build]')
@@ -89,6 +91,14 @@ else {
 }
 if (argv.sourceMaps) {
     buildConfig.sourceMaps = true;
+}
+
+// Detect bower dependencies location
+if (nodejs.path.existsSync('./.bowerrc')) {
+    var bowerConfig = JSON.parse(nodejs.fs.readFileSync('.bowerrc'));
+    if (bowerConfig.directory) {
+        buildConfig.bowerComponentsLocation = bowerConfig.directory;
+    }
 }
 
 
@@ -166,23 +176,25 @@ gulp.task('process-vendor-scripts', function() {
             'scrollspy.js',
             'tab.js',
             'affix.js'
-        ], {cwd: 'vendor/bootstrap/js'})
+        ], {cwd: nodejs.path.join(buildConfig.bowerComponentsLocation, 'bootstrap/js')})
             .pipe(plugins.plumber(onTaskError))
             .pipe(plugins.concat('bootstrap.js'))
             .pipe(amdWrapTransform({jquery: 'jQuery'}))
             .pipe(plugins.changed(buildConfig.outputPath, {hasChanged: plugins.changed.compareSha1Digest})),
-        gulp.src(buildConfig.release ? 'knockout.js' : 'knockout.debug.js', {cwd: 'vendor/knockout/dist'})
+        gulp.src(buildConfig.release ? 'knockout.js' : 'knockout.debug.js', {
+                cwd: nodejs.path.join(buildConfig.bowerComponentsLocation, 'knockout/dist')
+            })
             .pipe(plugins.plumber(onTaskError))
             .pipe(plugins.rename('knockout.js'))
             .pipe(plugins.changed(buildConfig.outputPath, {hasChanged: plugins.changed.compareSha1Digest})),
         gulp.src([
-            buildConfig.release && buildConfig.useAlmond ? 'vendor/almond/almond.js' : 'vendor/requirejs/require.js',
-            'vendor/jquery/dist/jquery.js',
-            'vendor/crossroads/dist/crossroads.js',
-            'vendor/hasher/dist/js/hasher.js',
-            'vendor/js-signals/dist/signals.js',
-            'vendor/q/q.js',
-            'vendor/requirejs-text/text.js'])
+            buildConfig.release && buildConfig.useAlmond ? 'almond/almond.js' : 'requirejs/require.js',
+            'jquery/dist/jquery.js',
+            'crossroads/dist/crossroads.js',
+            'hasher/dist/js/hasher.js',
+            'js-signals/dist/signals.js',
+            'q/q.js',
+            'requirejs-text/text.js'], {cwd: buildConfig.bowerComponentsLocation})
             .pipe(plugins.changed(buildConfig.outputPath))
     );
     return stream.pipe(gulp.dest(buildConfig.outputPath));
@@ -273,8 +285,16 @@ gulp.task('process-index-jade', function() {
             ext: '.html',
             data: {
                 APP_VERSION: buildConfig.version,
-                ALMOND_VERSION: buildConfig.release && buildConfig.useAlmond ? require('./vendor/almond/bower.json').version : null,
-                REQUIRE_VERSION: buildConfig.release && buildConfig.useAlmond ? null : require('./vendor/requirejs/bower.json').version
+                ALMOND_VERSION: buildConfig.release && buildConfig.useAlmond ?
+                    require(nodejs.path.resolve(
+                        nodejs.path.join(buildConfig.bowerComponentsLocation, 'almond/bower.json'))
+                    ).version :
+                    null,
+                REQUIRE_VERSION: buildConfig.release && buildConfig.useAlmond ?
+                    null :
+                    require(nodejs.path.resolve(
+                        nodejs.path.join(buildConfig.bowerComponentsLocation, 'requirejs/bower.json'))
+                    ).version
             }
         }))
         .pipe(gulp.dest(buildConfig.outputPath));
@@ -297,7 +317,6 @@ gulp.task('build', ['clean', 'process-vendor-scripts', 'process-app-scripts', 'p
 gulp.task('watch', ['build'], function() {
     buildConfig.IS_WATCH = true;
 
-    gulp.watch('vendor/**/bower.json', ['process-vendor-js']);
     gulp.watch('src/app/**/*.js', ['process-app-js']);
     gulp.watch('src/app/**/*.coffee', ['process-app-coffee']);
     gulp.watch('src/app/**/module-init.{js,coffee}', ['process-app-main']);
