@@ -1,36 +1,34 @@
 'use strict';
 /*jshint maxlen:false*/
 
-var gulp = require('gulp'),
-    gutil = require('gulp-util'),
-    mapStream = require('map-stream'),
+var gulp        = require('gulp'),
+    gutil       = require('gulp-util'),
+    mapStream   = require('map-stream'),
     mergeStream = require('merge-stream'),
-    notifier = require('node-notifier'),
-    tildify = require('tildify'),
-    commander = require('commander'),
-    del = require('del'),
-    temp = require('temp').track(),
+    notifier    = require('node-notifier'),
+    tildify     = require('tildify'),
+    commander   = require('commander'),
+    del         = require('del'),
+    temp        = require('temp').track(),
     nodejs = {
-        fs: require('fs'),
-        path: require('path'),
-        os: require('os'),
-        childProcess: require('child_process')
+        fs:     require('fs'),
+        path:   require('path')
     },
     plugins = {
-        changed: require('gulp-changed'),
-        coffee: require('gulp-coffee'),
-        concat: require('gulp-concat'),
-        footer: require('gulp-footer'),
-        iif: require('gulp-if'),
-        inject: require('gulp-inject'),
-        jade: require('gulp-jade'),
-        jshint: require('gulp-jshint'),
-        less: require('gulp-less'),
-        plumber: require('gulp-plumber'),
-        rename: require('gulp-rename'),
+        changed:    require('gulp-changed'),
+        coffee:     require('gulp-coffee'),
+        concat:     require('gulp-concat'),
+        footer:     require('gulp-footer'),
+        iif:        require('gulp-if'),
+        inject:     require('gulp-inject'),
+        jade:       require('gulp-jade'),
+        jshint:     require('gulp-jshint'),
+        less:       require('gulp-less'),
+        plumber:    require('gulp-plumber'),
+        rename:     require('gulp-rename'),
         sourceMaps: require('gulp-sourcemaps'),
         stripDebug: require('gulp-strip-debug'),
-        webServer: require('gulp-webserver'),
+        webServer:  require('gulp-webserver'),
         coffeeLint: require('gulp-coffeelint')
     },
     buildConfig = {
@@ -112,24 +110,21 @@ function mkTmpDir() {
 }
 
 
-
-gulp.task('clean', function(done) {
-    if (buildConfig.IS_WATCH || buildConfig.release) {
-        done();
-    }
-    else {
-        gutil.log('Cleaning output directory ' + gutil.colors.magenta(tildify(nodejs.path.resolve(buildConfig.outputPath))));
-        del('*', {cwd: buildConfig.outputPath}, function(err) {
-            if (err) {
-                gutil.log(gutil.colors.red(err));
-            }
-            done();
-        });
+gulp.task('clean', function() {
+    if (!buildConfig.release) {
+        try {
+            var fullPath = nodejs.path.resolve(buildConfig.outputPath);
+            gutil.log('Cleaning output directory ' + gutil.colors.magenta(tildify(fullPath)));
+            del.sync('*', {cwd: buildConfig.outputPath});
+        }
+        catch (e) {
+            gutil.log(gutil.colors.red(e));
+        }
     }
 });
 
 
-gulp.task('process-vendor-scripts', ['clean'], function() {
+gulp.task('process-vendor-scripts', function() {
     var amdWrapTransform = function(depMap) {
         return mapStream(function(file, cb) {
             var dependencyNames = Object.keys(depMap);
@@ -194,7 +189,7 @@ gulp.task('process-vendor-scripts', ['clean'], function() {
 });
 
 
-gulp.task('process-app-js', ['clean'], function() {
+gulp.task('process-app-js', function() {
     gulp.src('src/app/**/*.js', {base: 'src'})
         .pipe(plugins.plumber(onTaskError))
         .pipe(plugins.changed('app', {cwd: buildConfig.outputPath}))
@@ -206,7 +201,7 @@ gulp.task('process-app-js', ['clean'], function() {
         .pipe(gulp.dest(buildConfig.outputPath));
 });
 
-gulp.task('process-app-main', ['clean'], function() {
+gulp.task('process-app-main', function() {
     var injectDependenciesOptions = {
         transform: function(filePath, file, i, length) {
             var fileName = '\'' + gutil.replaceExtension(file.relative, '') + '\'';
@@ -227,7 +222,7 @@ gulp.task('process-app-main', ['clean'], function() {
         .pipe(gulp.dest(buildConfig.outputPath));
 });
 
-gulp.task('process-app-coffee', ['clean'], function() {
+gulp.task('process-app-coffee', function() {
     return gulp.src('src/app/**/*.coffee', {base: 'src'})
         .pipe(plugins.plumber(onTaskError))
         .pipe(plugins.changed('app', {cwd: buildConfig.outputPath, ext: '.js'}))
@@ -242,14 +237,14 @@ gulp.task('process-app-coffee', ['clean'], function() {
 gulp.task('process-app-scripts', ['process-app-js', 'process-app-main', 'process-app-coffee']);
 
 
-gulp.task('process-assets', ['clean'], function() {
+gulp.task('process-assets', function() {
     return gulp.src('src/assets/**', {base: 'src'})
         .pipe(plugins.plumber(onTaskError))
         .pipe(plugins.changed('assets', {cwd: buildConfig.outputPath}))
         .pipe(gulp.dest(buildConfig.outputPath));
 });
 
-gulp.task('process-less', ['clean'], function() {
+gulp.task('process-less', function() {
     return gulp.src(['src/styles/main.less', 'src/app/**/*.less'])
         .pipe(plugins.plumber(onTaskError))
         .pipe(plugins.iif(buildConfig.sourceMaps, plugins.sourceMaps.init()))
@@ -259,7 +254,7 @@ gulp.task('process-less', ['clean'], function() {
         .pipe(gulp.dest('styles', {cwd: buildConfig.outputPath}));
 });
 
-gulp.task('process-app-jade', ['clean'], function() {
+gulp.task('process-app-jade', function() {
     return gulp.src('src/app/**/*.jade', {base: 'src'})
         .pipe(plugins.plumber(onTaskError))
         .pipe(plugins.changed('app', {cwd: buildConfig.outputPath, ext: '.html'}))
@@ -267,7 +262,7 @@ gulp.task('process-app-jade', ['clean'], function() {
         .pipe(gulp.dest(buildConfig.outputPath));
 });
 
-gulp.task('process-index-jade', ['clean'], function() {
+gulp.task('process-index-jade', function() {
     return gulp.src('src/index.jade', {base: 'src'})
         .pipe(plugins.plumber(onTaskError))
         .pipe(plugins.changed(buildConfig.outputPath, {ext: '.html'}))
@@ -288,7 +283,7 @@ gulp.task('process-index-jade', ['clean'], function() {
 gulp.task('process-static-content', ['process-assets', 'process-less', 'process-app-jade', 'process-index-jade']);
 
 
-gulp.task('build', ['process-vendor-scripts', 'process-app-scripts', 'process-static-content'], function(done) {
+gulp.task('build', ['clean', 'process-vendor-scripts', 'process-app-scripts', 'process-static-content'], function(done) {
     if (buildConfig.release) {
         setTimeout(optimize.bind(undefined, done), 1000);
     }
@@ -313,17 +308,15 @@ gulp.task('watch', ['build'], function() {
     gulp.watch('src/app/**/*.jade', ['process-app-jade']);
     gulp.watch('src/index.jade', ['process-index-jade']);
 
-    if (argv.server) {
-        gulp.src(buildConfig.outputPath)
-            .pipe(plugins.plumber(onTaskError))
-            .pipe(plugins.webServer({
-                host: 'localhost',
-                port: parseInt(argv.server) || 8000,
-                livereload: true,
-                directoryListing: false,
-                open: true
-            }));
-    }
+    gulp.src(buildConfig.outputPath)
+        .pipe(plugins.plumber(onTaskError))
+        .pipe(plugins.webServer({
+            host: 'localhost',
+            port: parseInt(argv.server) || 8000,
+            livereload: true,
+            directoryListing: false,
+            open: false
+        }));
 });
 
 gulp.task('default', ['build']);
