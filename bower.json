@@ -42,7 +42,7 @@
     "bootstrap": "^3.3.1",
     "fontawesome": "^4.2.0",
     "requirejs-text": "^2.0.12",
-    "q": "^1.0.1",
+    "q": "^1.1.2",
     "almond": "^0.3.0"
   }
 }
