@@ -3,3 +3,4 @@ vendor
 dev
 build
 .idea
+npm-debug.log
