@@ -12,7 +12,7 @@ define(function(require, exports, module) {
     'use strict';
 
     var q       = require('q'),
-        helpers = require('app/shared/helpers'),
+        helpers = require('$helpers'),
         config  = module.config();
 
 

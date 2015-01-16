@@ -53,20 +53,20 @@ var gulp        = require('gulp'),
         // If the current build was started with the watch task
         IS_WATCH: false,
 
-        bowerComponentsLocation: 'bower_components'
+        bowerComponentsDir: 'bower_components'
     },
     argv = commander
         .option('--output [path]', 'The location to use to output build files [./dev | ./build]')
         .option('--source-maps', 'Generate source maps')
         .option('--release [version]', 'Create a release build [generate]')
         .option('--almond', 'If almond should be used instead of require.js')
-        .option('--server [port]', 'Start a livereload server on the specified port [8000]')
+        .option('--server [port]', 'Use specify port for livereload server [8000]')
 
         //- Gulp related CLI arguments
-        .option('--tasks')
-        .option('--color')
-        .option('--no-color')
-        .option('--gulpfile')
+        .option('--tasks', '[GULP]')
+        .option('--color', '[GULP]')
+        .option('--no-color', '[GULP]')
+        .option('--gulpfile', '[GULP]')
         .parse(process.argv);
 
 
@@ -94,11 +94,13 @@ if (argv.sourceMaps) {
 }
 
 // Detect bower dependencies location
-if (nodejs.path.existsSync('./.bowerrc')) {
-    var bowerConfig = JSON.parse(nodejs.fs.readFileSync('.bowerrc'));
-    if (bowerConfig.directory) {
-        buildConfig.bowerComponentsLocation = bowerConfig.directory;
-    }
+if (nodejs.fs.existsSync('./.bowerrc')) {
+    (function() {
+        var bowerConfig = JSON.parse(nodejs.fs.readFileSync('.bowerrc', {encoding: 'utf8'}));
+        if (bowerConfig.directory) {
+            buildConfig.bowerComponentsDir = bowerConfig.directory;
+        }
+    })();
 }
 
 
@@ -176,13 +178,13 @@ gulp.task('process-vendor-scripts', function() {
             'scrollspy.js',
             'tab.js',
             'affix.js'
-        ], {cwd: nodejs.path.join(buildConfig.bowerComponentsLocation, 'bootstrap/js')})
+        ], {cwd: nodejs.path.join(buildConfig.bowerComponentsDir, 'bootstrap/js')})
             .pipe(plugins.plumber(onTaskError))
             .pipe(plugins.concat('bootstrap.js'))
             .pipe(amdWrapTransform({jquery: 'jQuery'}))
             .pipe(plugins.changed(buildConfig.outputPath, {hasChanged: plugins.changed.compareSha1Digest})),
         gulp.src(buildConfig.release ? 'knockout.js' : 'knockout.debug.js', {
-                cwd: nodejs.path.join(buildConfig.bowerComponentsLocation, 'knockout/dist')
+                cwd: nodejs.path.join(buildConfig.bowerComponentsDir, 'knockout/dist')
             })
             .pipe(plugins.plumber(onTaskError))
             .pipe(plugins.rename('knockout.js'))
@@ -194,7 +196,7 @@ gulp.task('process-vendor-scripts', function() {
             'hasher/dist/js/hasher.js',
             'js-signals/dist/signals.js',
             'q/q.js',
-            'requirejs-text/text.js'], {cwd: buildConfig.bowerComponentsLocation})
+            'requirejs-text/text.js'], {cwd: buildConfig.bowerComponentsDir})
             .pipe(plugins.changed(buildConfig.outputPath))
     );
     return stream.pipe(gulp.dest(buildConfig.outputPath));
@@ -261,7 +263,7 @@ gulp.task('process-less', function() {
         .pipe(plugins.plumber(onTaskError))
         .pipe(plugins.iif(buildConfig.sourceMaps, plugins.sourceMaps.init()))
         .pipe(plugins.concat('main.less'))
-        .pipe(plugins.less({ ieCompat: false, compress: buildConfig.release}))
+        .pipe(plugins.less({ ieCompat: false, compress: buildConfig.release, modifyVars: {bowerComponentsDir: buildConfig.bowerComponentsDir}}))
         .pipe(plugins.iif(buildConfig.sourceMaps, plugins.sourceMaps.write()))
         .pipe(gulp.dest('styles', {cwd: buildConfig.outputPath}));
 });
@@ -287,13 +289,13 @@ gulp.task('process-index-jade', function() {
                 APP_VERSION: buildConfig.version,
                 ALMOND_VERSION: buildConfig.release && buildConfig.useAlmond ?
                     require(nodejs.path.resolve(
-                        nodejs.path.join(buildConfig.bowerComponentsLocation, 'almond/bower.json'))
+                        nodejs.path.join(buildConfig.bowerComponentsDir, 'almond/bower.json'))
                     ).version :
                     null,
                 REQUIRE_VERSION: buildConfig.release && buildConfig.useAlmond ?
                     null :
                     require(nodejs.path.resolve(
-                        nodejs.path.join(buildConfig.bowerComponentsLocation, 'requirejs/bower.json'))
+                        nodejs.path.join(buildConfig.bowerComponentsDir, 'requirejs/bower.json'))
                     ).version
             }
         }))

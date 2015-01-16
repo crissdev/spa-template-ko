@@ -1,4 +1,4 @@
-define(['knockout', 'app/shared/bindings/context/context'], function(ko, contextBinding) {
+define(['knockout', 'app/shared/bindings/context'], function(ko, contextBinding) {
     'use strict';
 
     describe('context binding', function() {

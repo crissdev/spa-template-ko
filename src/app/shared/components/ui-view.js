@@ -1,7 +1,7 @@
 define(function(require) {
     'use strict';
 
-    var router      = require('app/shared/router'),
+    var router      = require('$router'),
         ko          = require('knockout'),
         crossroads  = require('crossroads'),
         hasher      = require('hasher'),
