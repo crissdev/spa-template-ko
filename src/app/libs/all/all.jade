@@ -1,12 +1,12 @@
 .content-page-libs-all
   h2(data-bind="text: $data.title")
 
-  .alert.alert-info
+  .alert.alert-info(style="background-color: #2196f3; border-color: #2196f3")
     span This project would not exist without the help of the following great libraries.
 
   ul.list-unstyled(data-bind="foreach: $data.libraries")
     li
-      .hand.fade.text-info
+      .hand.fade(style="color: #2196f3")
         i.fa.fa-hand-o-right
         | &nbsp;
-      a(data-bind="attr: { href: '#/libs/view/' + encodeURIComponent($data.name) }, text: $data.title")
+      a(data-bind="attr: {href: '#/libs/view/' + encodeURIComponent($data.name)}, text: $data.title")

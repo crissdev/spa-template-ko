@@ -4,3 +4,4 @@ dev
 build
 .idea
 npm-debug.log
+bower_components
