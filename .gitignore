@@ -1,6 +1,7 @@
-node_modules
-vendor
-dev
-build
-.idea
+node_modules/
+vendor/
+dev/
+build/
+.idea/
 npm-debug.log
+bower_components/
