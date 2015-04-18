@@ -1,3 +1,6 @@
-.idea
-node_modules
-vendor
+.idea/
+node_modules/
+vendor/
+bower_components/
+dev/
+build/
